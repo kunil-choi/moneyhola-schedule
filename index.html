@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>머니올라 주간 일정표</title>
+  <style>
+    /* ───────────────────────────── 기본 리셋 & 변수 ───────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary:   #1a56db;
+      --primary-light: #e8f0fe;
+      --accent:    #f59e0b;
+      --danger:    #ef4444;
+      --success:   #10b981;
+      --gray-50:   #f9fafb;
+      --gray-100:  #f3f4f6;
+      --gray-200:  #e5e7eb;
+      --gray-300:  #d1d5db;
+      --gray-500:  #6b7280;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --radius:    8px;
+      --shadow:    0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+    }
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: var(--gray-100);
+      color: var(--gray-900);
+      min-height: 100vh;
+    }
+
+    /* ───────────────────────────── 헤더 ───────────────────────────── */
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-lg);
+    }
+    header h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.3px; }
+    header h1 span { opacity: .75; font-weight: 400; font-size: .9rem; margin-left: 8px; }
+
+    /* ───────────────────────────── 주간 네비게이션 ───────────────────────────── */
+    .week-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 10px 24px;
+      position: sticky;
+      top: 60px;
+      z-index: 99;
+    }
+    .week-nav button {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 6px 14px;
+      font-size: .85rem;
+      cursor: pointer;
+      color: var(--gray-700);
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .week-nav button:hover  { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+    .week-nav button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .week-title {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      flex: 1;
+      text-align: center;
+    }
+    .btn-today {
+      background: var(--accent) !important;
+      color: #fff !important;
+      border-color: var(--accent) !important;
+    }
+    .btn-today:hover { opacity: .9; }
+
+    /* ───────────────────────────── 메인 레이아웃 ───────────────────────────── */
+    main { padding: 20px 24px 80px; max-width: 1400px; margin: 0 auto; }
+
+    /* ───────────────────────────── 요일 그리드 ───────────────────────────── */
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 1100px) { .day-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 700px)  { .day-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ───────────────────────────── 날짜 카드 ───────────────────────────── */
+    .day-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .day-card:hover      { box-shadow: var(--shadow-lg); }
+    .day-card.today      { border-color: var(--primary); }
+    .day-card.saturday   { border-top: 3px solid #3b82f6; }
+    .day-card.sunday     { border-top: 3px solid var(--danger); }
+    .day-card.past       { opacity: .65; }
+    .day-card.empty-day  { background: var(--gray-50); opacity: .5; }
+
+    /* 카드 헤더 */
+    .card-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-date {
+      display: flex;
+      flex-direction: column;
+    }
+    .card-date .day-num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .card-date .day-label {
+      font-size: .7rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+    .day-card.today .card-date .day-num { color: var(--primary); }
+    .day-card.saturday .card-date .day-num { color: #3b82f6; }
+    .day-card.sunday   .card-date .day-num { color: var(--danger); }
+
+    .today-badge {
+      background: var(--primary);
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 99px;
+    }
+
+    /* 카드 바디 */
+    .card-body { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+
+    /* 필드 행 */
+    .field-row { display: flex; flex-direction: column; gap: 2px; }
+    .field-label {
+      font-size: .65rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .field-value {
+      font-size: .82rem;
+      color: var(--gray-700);
+      line-height: 1.4;
+    }
+    .field-value.empty { color: var(--gray-300); font-style: italic; }
+
+    /* 입력 필드 */
+    .field-input {
+      width: 100%;
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      padding: 5px 7px;
+      font-size: .82rem;
+      font-family: inherit;
+      color: var(--gray-900);
+      background: var(--gray-50);
+      resize: vertical;
+      transition: border-color .15s, background .15s;
+      min-height: 32px;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(26,86,219,.1);
+    }
+    select.field-input { min-height: unset; height: 32px; resize: none; }
+
+    /* 시간 입력 */
+    .time-row { display: flex; align-items: center; gap: 6px; }
+    .time-row input[type="time"] {
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      padding: 4px 6px;
+      font-size: .8rem;
+      background: var(--gray-50);
+      color: var(--gray-900);
+      flex: 1;
+    }
+    .time-row input[type="time"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    /* 태그 칩 */
+    .chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: .7rem;
+      font-weight: 600;
+      margin: 1px 2px 1px 0;
+    }
+    .chip-blue   { background: #dbeafe; color: #1d4ed8; }
+    .chip-green  { background: #d1fae5; color: #065f46; }
+    .chip-yellow { background: #fef3c7; color: #92400e; }
+    .chip-red    { background: #fee2e2; color: #991b1b; }
+    .chip-purple { background: #ede9fe; color: #5b21b6; }
+
+    /* 리소스 체크박스 */
+    .resource-checks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+    .resource-checks label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: .75rem;
+      color: var(--gray-700);
+      cursor: pointer;
+    }
+    .resource-checks input[type="checkbox"] { accent-color: var(--primary); width: 13px; height: 13px; }
+
+    /* 카드 푸터 */
+    .card-footer {
+      padding: 8px 12px;
+      border-top: 1px solid var(--gray-100);
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .btn-save {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 12px;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-save:hover { background: #1348c8; }
+    .btn-clear {
+      background: var(--gray-100);
+      color: var(--gray-500);
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-clear:hover { background: #fee2e2; color: var(--danger); border-color: var(--danger); }
+
+    /* 저장 완료 펄스 */
+    @keyframes savedPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(16,185,129,.5); }
+      70%  { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+      100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+    }
+    .day-card.saved { animation: savedPulse .6s ease-out; }
+
+    /* ───────────────────────────── 상단 주간 보고 메모 ───────────────────────────── */
+    .memo-section {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 18px;
+      margin-bottom: 18px;
+    }
+    .memo-section h3 { font-size: .9rem; color: var(--gray-700); margin-bottom: 8px; font-weight: 600; }
+    .memo-section textarea {
+      width: 100%;
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      padding: 8px 10px;
+      font-size: .85rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 64px;
+      background: var(--gray-50);
+    }
+    .memo-section textarea:focus { outline: none; border-color: var(--primary); background: #fff; }
+    .memo-save-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+
+    /* ───────────────────────────── 토스트 알림 ───────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--gray-900);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      font-size: .85rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .25s, transform .25s;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ───────────────────────────── 공휴일 배지 ───────────────────────────── */
+    .holiday-badge {
+      font-size: .65rem;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header>
+  <h1>📅 머니올라 근무 & 녹화 일정표 <span>2026</span></h1>
+  <div style="font-size:.8rem;opacity:.8;" id="lastSavedInfo"></div>
+</header>
+
+<!-- 주간 네비게이션 -->
+<div class="week-nav">
+  <button onclick="changeWeek(-1)">◀ 이전 주</button>
+  <div class="week-title" id="weekTitle"></div>
+  <button onclick="changeWeek(1)">다음 주 ▶</button>
+  <button class="btn-today" onclick="goToday()">오늘</button>
+</div>
+
+<!-- 메인 -->
+<main>
+  <!-- 주간 보고 메모 -->
+  <div class="memo-section">
+    <h3>📝 주간 보고서 특이사항 메모</h3>
+    <textarea id="weekMemo" placeholder="예) 양영은: 27 휴가 / 최건일: 1 관내출장 ..."></textarea>
+    <div class="memo-save-row">
+      <button class="btn-save" onclick="saveWeekMemo()">메모 저장</button>
+    </div>
+  </div>
+
+  <!-- 7일 카드 그리드 -->
+  <div class="day-grid" id="dayGrid"></div>
+</main>
+
+<!-- 토스트 -->
+<div id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   설정
+══════════════════════════════════════════════════════════ */
+const TEAM_MEMBERS = ['양영은', '최건일', '김태환', '박채빈', '외주', ''];
+const DAY_NAMES    = ['일', '월', '화', '수', '목', '금', '토'];
+const MONTH_NAMES  = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+
+// 공휴일 (yyyy-mm-dd 형식)
+const HOLIDAYS = {
+  '2026-01-01': '신정',
+  '2026-01-28': '설날연휴',
+  '2026-01-29': '설날',
+  '2026-01-30': '설날연휴',
+  '2026-03-01': '삼일절',
+  '2026-05-05': '어린이날',
+  '2026-05-24': '부처님오신날',
+  '2026-06-06': '현충일',
+  '2026-08-15': '광복절',
+  '2026-09-24': '추석연휴',
+  '2026-09-25': '추석',
+  '2026-09-26': '추석연휴',
+  '2026-10-03': '개천절',
+  '2026-10-09': '한글날',
+  '2026-12-25': '크리스마스',
+};
+
+/* ══════════════════════════════════════════════════════════
+   상태
+══════════════════════════════════════════════════════════ */
+let currentWeekStart = getThisWeekMonday(new Date());
+
+/* ══════════════════════════════════════════════════════════
+   날짜 유틸
+══════════════════════════════════════════════════════════ */
+function getThisWeekMonday(date) {
+  const d = new Date(date);
+  const day = d.getDay(); // 0=일
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  d.setHours(0,0,0,0);
+  return d;
+}
+function addDays(date, n) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + n);
+  return d;
+}
+function toKey(date) {
+  return date.toISOString().slice(0,10); // yyyy-mm-dd
+}
+function formatDate(date) {
+  return `${date.getMonth()+1}월 ${date.getDate()}일 (${DAY_NAMES[date.getDay()]})`;
+}
+function isSameDay(a, b) { return toKey(a) === toKey(b); }
+
+/* ══════════════════════════════════════════════════════════
+   localStorage 래퍼
+══════════════════════════════════════════════════════════ */
+function loadData(key) {
+  try { return JSON.parse(localStorage.getItem(key)) || {}; }
+  catch { return {}; }
+}
+function saveData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getDayData(dateKey) {
+  const all = loadData('schedule_days');
+  return all[dateKey] || {};
+}
+function setDayData(dateKey, data) {
+  const all = loadData('schedule_days');
+  all[dateKey] = data;
+  saveData('schedule_days', all);
+}
+
+function getWeekMemo(weekKey) {
+  const all = loadData('schedule_memos');
+  return all[weekKey] || '';
+}
+function setWeekMemo(weekKey, memo) {
+  const all = loadData('schedule_memos');
+  all[weekKey] = memo;
+  saveData('schedule_memos', all);
+}
+
+/* ══════════════════════════════════════════════════════════
+   주간 키
+══════════════════════════════════════════════════════════ */
+function weekKey(monday) { return toKey(monday); }
+
+/* ══════════════════════════════════════════════════════════
+   렌더링
+══════════════════════════════════════════════════════════ */
+function render() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const mon   = currentWeekStart;
+  const sun   = addDays(mon, 6);
+
+  // 주간 타이틀
+  document.getElementById('weekTitle').textContent =
+    `${mon.getFullYear()}년  ${formatDate(mon)} ~ ${formatDate(sun)}`;
+
+  // 메모 로드
+  document.getElementById('weekMemo').value = getWeekMemo(weekKey(mon));
+
+  // 카드 그리드
+  const grid = document.getElementById('dayGrid');
+  grid.innerHTML = '';
+
+  for (let i = 0; i < 7; i++) {
+    const date    = addDays(mon, i);
+    const dKey    = toKey(date);
+    const dow     = date.getDay(); // 0=일,6=토
+    const isToday = isSameDay(date, today);
+    const isPast  = date < today;
+    const holiday = HOLIDAYS[dKey];
+
+    const data = getDayData(dKey);
+
+    // 카드 클래스
+    const classes = [
+      'day-card',
+      dow === 0 ? 'sunday' : '',
+      dow === 6 ? 'saturday' : '',
+      isToday   ? 'today' : '',
+      isPast    ? 'past' : '',
+    ].filter(Boolean).join(' ');
+
+    // 출연자 옵션
+    const memberOpts = TEAM_MEMBERS.map(m =>
+      `<option value="${m}" ${(data.출연자||'') === m ? 'selected':''}>${m || '—'}</option>`
+    ).join('');
+    const prodOpts = TEAM_MEMBERS.map(m =>
+      `<option value="${m}" ${(data.제작자||'') === m ? 'selected':''}>${m || '—'}</option>`
+    ).join('');
+    const editOpts = TEAM_MEMBERS.map(m =>
+      `<option value="${m}" ${(data.편집자||'') === m ? 'selected':''}>${m || '—'}</option>`
+    ).join('');
+
+    // 리소스 체크
+    const res = data.리소스 || {};
+    const checks = [
+      ['camera', '📷 카메라'],
+      ['audio',  '🎙 오디오'],
+      ['monitor','🖥 멀티모니터'],
+      ['vehicle','🚐 차량'],
+    ].map(([k,label]) =>
+      `<label>
+        <input type="checkbox" data-res="${k}" ${res[k] ? 'checked' : ''}> ${label}
+      </label>`
+    ).join('');
+
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="${classes}" id="card-${dKey}" data-key="${dKey}">
+        <div class="card-header">
+          <div class="card-date">
+            <div class="day-num">${date.getDate()}</div>
+            <div class="day-label">${MONTH_NAMES[date.getMonth()]} (${DAY_NAMES[dow]})</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+            ${isToday ? '<span class="today-badge">오늘</span>' : ''}
+            ${holiday ? `<span class="holiday-badge">${holiday}</span>` : ''}
+          </div>
+        </div>
+        <div class="card-body">
+
+          <!-- 녹화 시간 -->
+          <div class="field-row">
+            <div class="field-label">🕐 녹화 시간</div>
+            <div class="time-row">
+              <input type="time" data-field="시간1" value="${data.시간1||''}" placeholder="--:--">
+              <span style="font-size:.7rem;color:var(--gray-400)">2차</span>
+              <input type="time" data-field="시간2" value="${data.시간2||''}" placeholder="--:--">
+            </div>
+          </div>
+
+          <!-- 출연자 -->
+          <div class="field-row">
+            <div class="field-label">🎤 출연자</div>
+            <textarea class="field-input" data-field="출연자" rows="2" placeholder="출연자 이름">${data.출연자||''}</textarea>
+          </div>
+
+          <!-- 제작자 -->
+          <div class="field-row">
+            <div class="field-label">🎬 제작자</div>
+            <select class="field-input" data-field="제작자">${prodOpts}</select>
+          </div>
+
+          <!-- 편집자 -->
+          <div class="field-row">
+            <div class="field-label">✂️ 편집자</div>
+            <select class="field-input" data-field="편집자">${editOpts}</select>
+          </div>
+
+          <!-- 업로드 아이템 -->
+          <div class="field-row">
+            <div class="field-label">📤 업로드 아이템</div>
+            <textarea class="field-input" data-field="업로드" rows="2" placeholder="업로드 내용 및 시간">${data.업로드||''}</textarea>
+          </div>
+
+          <!-- 리소스 신청 -->
+          <div class="field-row">
+            <div class="field-label">🔧 리소스 신청</div>
+            <div class="resource-checks">${checks}</div>
+          </div>
+
+          <!-- 특이사항 -->
+          <div class="field-row">
+            <div class="field-label">📌 특이사항</div>
+            <textarea class="field-input" data-field="특이" rows="2" placeholder="특이사항 입력">${data.특이||''}</textarea>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <button class="btn-clear" onclick="clearDay('${dKey}')">초기화</button>
+          <button class="btn-save"  onclick="saveDay('${dKey}')">저장 ✓</button>
+        </div>
+      </div>
+    `);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   저장 / 초기화
+══════════════════════════════════════════════════════════ */
+function saveDay(dKey) {
+  const card = document.getElementById(`card-${dKey}`);
+
+  // 텍스트/select 필드
+  const data = {};
+  card.querySelectorAll('[data-field]').forEach(el => {
+    data[el.dataset.field] = el.value;
+  });
+
+  // 리소스 체크박스
+  const res = {};
+  card.querySelectorAll('[data-res]').forEach(cb => {
+    res[cb.dataset.res] = cb.checked;
+  });
+  data.리소스 = res;
+
+  setDayData(dKey, data);
+
+  // 저장 애니메이션
+  card.classList.remove('saved');
+  void card.offsetWidth;
+  card.classList.add('saved');
+  setTimeout(() => card.classList.remove('saved'), 700);
+
+  showToast('✅ 저장되었습니다.');
+  updateLastSaved();
+}
+
+function clearDay(dKey) {
+  if (!confirm('이 날의 데이터를 모두 초기화할까요?')) return;
+  setDayData(dKey, {});
+  render();
+  showToast('🗑 초기화되었습니다.');
+}
+
+function saveWeekMemo() {
+  const memo = document.getElementById('weekMemo').value;
+  setWeekMemo(weekKey(currentWeekStart), memo);
+  showToast('✅ 주간 메모가 저장되었습니다.');
+  updateLastSaved();
+}
+
+/* ══════════════════════════════════════════════════════════
+   주간 이동
+══════════════════════════════════════════════════════════ */
+function changeWeek(dir) {
+  currentWeekStart = addDays(currentWeekStart, dir * 7);
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function goToday() {
+  currentWeekStart = getThisWeekMonday(new Date());
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // 오늘 카드로 스크롤
+  setTimeout(() => {
+    const todayCard = document.querySelector('.day-card.today');
+    if (todayCard) todayCard.scrollIntoView({ behavior:'smooth', block:'center' });
+  }, 150);
+}
+
+/* ══════════════════════════════════════════════════════════
+   토스트
+══════════════════════════════════════════════════════════ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ══════════════════════════════════════════════════════════
+   마지막 저장 시각
+══════════════════════════════════════════════════════════ */
+function updateLastSaved() {
+  const now = new Date();
+  document.getElementById('lastSavedInfo').textContent =
+    `마지막 저장: ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   키보드 단축키 (Ctrl+S → 현재 주 전체 저장)
+══════════════════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    const mon = currentWeekStart;
+    for (let i = 0; i < 7; i++) {
+      const dKey = toKey(addDays(mon, i));
+      const card = document.getElementById(`card-${dKey}`);
+      if (card) saveDay(dKey);
+    }
+    saveWeekMemo();
+    showToast('✅ 이번 주 전체 저장 완료 (Ctrl+S)');
+  }
+});
+
+/* ══════════════════════════════════════════════════════════
+   초기 실행
+══════════════════════════════════════════════════════════ */
+render();
+</script>
+</body>
+</html>
