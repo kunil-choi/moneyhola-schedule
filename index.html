@@ -9,107 +9,99 @@
 :root{
   --primary:#1a56db;
   --primary-light:#dbeafe;
-  --accent:#f59e0b;
-  --gray-50:#f9fafb;
   --gray-100:#f3f4f6;
   --gray-200:#e5e7eb;
   --gray-600:#4b5563;
   --radius:5px;
-  --shadow:0 1px 3px rgba(0,0,0,.12);
 }
-body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--gray-100);font-size:12px;color:#111;}
-/* ── HEADER ── */
-header{background:var(--primary);color:#fff;padding:0 16px;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 6px rgba(0,0,0,.2);}
-header h1{font-size:15px;font-weight:700;letter-spacing:-.3px;}
-#lastSaved{font-size:10px;opacity:.8;}
-/* ── WEEK NAV ── */
-.week-nav{display:flex;align-items:center;gap:8px;background:#fff;padding:7px 16px;position:sticky;top:48px;z-index:200;border-bottom:1px solid var(--gray-200);box-shadow:var(--shadow);}
-.week-nav button{background:var(--primary);color:#fff;border:none;border-radius:var(--radius);padding:4px 10px;font-size:11px;cursor:pointer;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--gray-100);font-size:13px;color:#111;}
+
+/* HEADER */
+header{background:var(--primary);color:#fff;padding:0 18px;height:50px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 6px rgba(0,0,0,.2);}
+header h1{font-size:16px;font-weight:700;}
+#lastSaved{font-size:11px;opacity:.8;}
+
+/* WEEK NAV */
+.week-nav{display:flex;align-items:center;gap:8px;background:#fff;padding:8px 18px;position:sticky;top:50px;z-index:200;border-bottom:1px solid var(--gray-200);}
+.week-nav button{background:var(--primary);color:#fff;border:none;border-radius:var(--radius);padding:5px 12px;font-size:12px;cursor:pointer;}
 .week-nav button:hover{opacity:.85;}
 .btn-today{background:#10b981!important;}
-#weekTitle{font-size:13px;font-weight:700;min-width:180px;text-align:center;}
+.btn-save-top{background:#f59e0b!important;color:#fff!important;}
+#weekTitle{font-size:14px;font-weight:700;min-width:190px;text-align:center;}
 .nav-right{margin-left:auto;display:flex;gap:6px;}
-/* ── TABLE WRAP ── */
-.table-wrap{background:#fff;overflow-x:auto;margin:0;}
-table{width:100%;border-collapse:collapse;min-width:900px;}
-col.c-date {width:90px;}
-col.c-slot {width:150px;}   /* 녹화시간 */
-col.c-guest{width:240px;}   /* 출연자 */
-col.c-prod {width:90px;}    /* 제작자 */
-col.c-edit {width:90px;}    /* 편집자 */
-col.c-upload{width:200px;}  /* 업로드 아이템 */
-col.c-res  {width:38px;}    /* 리소스 */
-col.c-note {width:120px;}   /* 특이사항 */
-col.c-act  {width:32px;}
 
-thead tr th{
+/* TABLE */
+.table-wrap{background:#fff;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:900px;}
+
+col.c-date  {width:100px;}
+col.c-slot  {width:155px;}
+col.c-guest {width:245px;}
+col.c-prod  {width:92px;}
+col.c-edit  {width:92px;}
+col.c-upload{width:205px;}
+col.c-res   {width:38px;}
+col.c-note  {width:115px;}
+col.c-act   {width:28px;}
+
+thead th{
   background:var(--primary);color:#fff;
-  padding:6px 4px;font-size:11px;font-weight:700;
-  position:sticky;top:87px;z-index:100;
+  padding:7px 5px;font-size:12px;font-weight:700;
+  position:sticky;top:91px;z-index:100;
   border-right:1px solid rgba(255,255,255,.25);
-  white-space:nowrap;
+  white-space:nowrap;text-align:center;
 }
+
 tbody tr{border-bottom:1px solid var(--gray-200);}
 tbody tr:hover{background:#f0f7ff;}
-td{padding:3px 4px;vertical-align:top;border-right:1px solid var(--gray-200);}
-td.td-date{font-size:11px;font-weight:700;color:var(--primary);white-space:nowrap;}
+td{padding:3px 4px;vertical-align:middle;border-right:1px solid var(--gray-200);}
+
+td.td-date{font-size:12px;font-weight:700;color:var(--primary);white-space:nowrap;vertical-align:top;padding-top:6px;}
 .today-row td.td-date{color:#dc2626;}
-.slot-label{font-size:9px;color:#6b7280;background:var(--gray-100);padding:1px 4px;border-radius:3px;margin-bottom:2px;display:inline-block;}
-
-/* inputs inside table */
-table input[type=text], table textarea{
-  width:100%;border:1px solid var(--gray-200);border-radius:3px;
-  font-size:11px;padding:2px 4px;font-family:inherit;
-  background:#fff;resize:none;
-}
-table input[type=text]:focus,table textarea:focus{outline:none;border-color:var(--primary);}
-table textarea{overflow:hidden;min-height:22px;}
-/* upload textarea – auto height, no manual resize */
-.ta-upload{min-height:22px;overflow:hidden;}
-
-/* resource checkbox */
-.res-cell{text-align:center;vertical-align:middle;}
-.res-cell input[type=checkbox]{width:14px;height:14px;cursor:pointer;}
-
-/* action col */
-.btn-del{background:#ef4444;color:#fff;border:none;border-radius:3px;padding:1px 5px;font-size:10px;cursor:pointer;}
-
-/* date cell with 2차 button */
-.date-cell-inner{display:flex;flex-direction:column;gap:3px;}
-.btn-add-slot{
-  font-size:9px;background:#e0f2fe;color:#0369a1;
-  border:1px solid #bae6fd;border-radius:3px;
-  padding:1px 5px;cursor:pointer;white-space:nowrap;
-  display:inline-block;width:fit-content;
-}
-.btn-add-slot:hover{background:#bae6fd;}
-
-/* today badge */
-.badge-today{
-  display:inline-block;background:#dc2626;color:#fff;
-  font-size:9px;padding:0 4px;border-radius:3px;margin-left:4px;
-}
-/* sat/sun */
 .sat td.td-date{color:#2563eb;}
 .sun td.td-date{color:#dc2626;}
 
-/* ── MEMO (bottom) ── */
-.memo-wrap{background:#fff;padding:12px 16px;margin-top:1px;border-top:2px solid var(--primary);}
-.memo-wrap h3{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:8px;}
-.memo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px;}
-.memo-item label{display:block;font-size:11px;font-weight:700;color:var(--gray-600);margin-bottom:3px;}
-.memo-item textarea{width:100%;height:64px;border:1px solid var(--gray-200);border-radius:var(--radius);font-family:inherit;font-size:11px;padding:4px 6px;resize:vertical;}
-.memo-item textarea:focus{outline:none;border-color:var(--primary);}
-.btn-save{background:var(--primary);color:#fff;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;cursor:pointer;}
-.btn-save:hover{opacity:.85;}
-.btn-clear{background:#e5e7eb;color:#374151;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;cursor:pointer;margin-left:6px;}
-/* ── TOAST ── */
-#toast{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  background:#111;color:#fff;padding:7px 18px;border-radius:20px;
-  font-size:12px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:9999;
+.date-cell-inner{display:flex;flex-direction:column;gap:4px;align-items:flex-start;}
+.badge-today{display:inline-block;background:#dc2626;color:#fff;font-size:9px;padding:0 4px;border-radius:3px;margin-left:3px;vertical-align:middle;}
+.slot-label{font-size:10px;color:#6b7280;background:var(--gray-100);padding:1px 5px;border-radius:3px;display:inline-block;}
+.btn-add-slot{font-size:10px;background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;border-radius:3px;padding:2px 7px;cursor:pointer;white-space:nowrap;}
+.btn-add-slot:hover{background:#bae6fd;}
+
+/* inputs */
+table input[type=text], table textarea, table select{
+  width:100%;border:1px solid var(--gray-200);border-radius:3px;
+  font-size:12px;padding:3px 5px;font-family:inherit;
+  background:#fff;display:block;
 }
+table input[type=text]:focus,
+table textarea:focus,
+table select:focus{outline:none;border-color:var(--primary);}
+table textarea{resize:none;overflow:hidden;min-height:24px;}
+table select{cursor:pointer;appearance:auto;}
+
+/* resource checkbox */
+.res-cell{text-align:center;vertical-align:middle;}
+.res-cell input[type=checkbox]{width:15px;height:15px;cursor:pointer;}
+
+/* del button */
+.btn-del{background:#ef4444;color:#fff;border:none;border-radius:3px;padding:2px 5px;font-size:10px;cursor:pointer;}
+
+/* MEMO */
+.memo-wrap{background:#fff;padding:14px 18px;margin-top:2px;border-top:2px solid var(--primary);}
+.memo-wrap h3{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;}
+.memo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px;}
+.memo-item label{display:block;font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:4px;}
+.memo-item textarea{width:100%;height:68px;border:1px solid var(--gray-200);border-radius:var(--radius);font-family:inherit;font-size:12px;padding:5px 7px;resize:vertical;}
+.memo-item textarea:focus{outline:none;border-color:var(--primary);}
+.memo-btns{display:flex;gap:8px;}
+.btn-save{background:var(--primary);color:#fff;border:none;border-radius:var(--radius);padding:6px 16px;font-size:12px;cursor:pointer;}
+.btn-save:hover{opacity:.85;}
+.btn-clear{background:#e5e7eb;color:#374151;border:none;border-radius:var(--radius);padding:6px 16px;font-size:12px;cursor:pointer;}
+
+/* TOAST */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:8px 20px;border-radius:20px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:9999;}
 #toast.show{opacity:1;}
+
 @media(max-width:700px){.memo-grid{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -126,7 +118,7 @@ table textarea{overflow:hidden;min-height:22px;}
   <button onclick="changeWeek(1)">다음 주 ▶</button>
   <div class="nav-right">
     <button class="btn-today" onclick="goToday()">오늘</button>
-    <button class="btn-save" onclick="saveAll()">💾 저장</button>
+    <button class="btn-save-top" onclick="saveAll()">💾 저장 (Ctrl+S)</button>
   </div>
 </div>
 
@@ -160,7 +152,6 @@ table textarea{overflow:hidden;min-height:22px;}
   </table>
 </div>
 
-<!-- 메모: 화면 하단 -->
 <div class="memo-wrap">
   <h3>📝 주간 보고서 근태 및 특이사항</h3>
   <div class="memo-grid">
@@ -177,20 +168,25 @@ table textarea{overflow:hidden;min-height:22px;}
       <textarea id="memo-etc" placeholder="기타 특이사항"></textarea>
     </div>
   </div>
-  <button class="btn-save" onclick="saveMemo()">메모 저장</button>
-  <button class="btn-clear" onclick="clearWeekData()">이번 주 초기화</button>
+  <div class="memo-btns">
+    <button class="btn-save" onclick="saveMemo()">메모 저장</button>
+    <button class="btn-clear" onclick="clearWeekData()">이번 주 초기화</button>
+  </div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-/* =========================================================
-   PRESET DATA  – DOCS 원본 날짜와 1:1 매핑
-   형식: 'YYYY-MM-DD': [ {slot, guest, prod, edit, upload, res, note}, ... ]
-   slot 없이 업로드만 있는 날은 slot:'' 로 표시
-   ========================================================= */
+/* ===================================================
+   팀원 목록
+=================================================== */
+const PRODUCERS = ['','양영은','최건일','윤지해','외주'];
+const EDITORS   = ['','박채빈','김태환','외주'];
+
+/* ===================================================
+   PRESET 데이터 – DOCS 원본 날짜 1:1 매핑
+=================================================== */
 const P = {
-  // ── 1월 ──
   '2026-01-01':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-01-02':[{slot:'',guest:'염승환',prod:'양영은',edit:'박채빈',upload:'',res:false,note:''}],
   '2026-01-05':[{slot:'',guest:'',prod:'',edit:'',upload:'페르소나AI 풀버전업로드 (17:00)',res:false,note:''}],
@@ -211,11 +207,10 @@ const P = {
   '2026-01-22':[{slot:'',guest:'',prod:'',edit:'',upload:'코자아 쇼츠4 (7:00)\n윤지해 랩장 1부 업로드',res:false,note:''}],
   '2026-01-23':[{slot:'10:30',guest:'염승환',prod:'최건일',edit:'김태환',upload:'코자아 쇼츠5 (7:00)\n윤지해 랩장 2부 업로드',res:true,note:''},{slot:'14:00',guest:'북터뷰(홍진채)',prod:'양영은',edit:'박채빈',upload:'',res:true,note:''}],
   '2026-01-26':[{slot:'',guest:'',prod:'',edit:'',upload:'피터앤김 풀버전 업로드 (17:00)',res:false,note:''}],
-  '2026-01-27':[{slot:'',guest:'중소기업중앙회 녹화',prod:'양영은',edit:'외주 제작',upload:'',res:false,note:''}],
+  '2026-01-27':[{slot:'',guest:'중소기업중앙회 녹화',prod:'양영은',edit:'외주',upload:'',res:false,note:''}],
   '2026-01-28':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-01-29':[{slot:'14:00',guest:'북터뷰 세빛희 작가',prod:'양영은',edit:'',upload:'',res:false,note:'최건일 휴가'}],
   '2026-01-30':[{slot:'10:30',guest:'염승환',prod:'양영은',edit:'김태환',upload:'',res:false,note:'최건일 휴가'}],
-  // ── 2월 ──
   '2026-02-02':[{slot:'',guest:'',prod:'',edit:'',upload:'홍진채 북터뷰 1부 업로드 (7:00)',res:false,note:'최건일 휴가'}],
   '2026-02-03':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:'최건일 휴가'}],
   '2026-02-04':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:'양영은 휴가'}],
@@ -236,7 +231,6 @@ const P = {
   '2026-02-25':[{slot:'',guest:'',prod:'',edit:'',upload:'이노크라스 쇼츠3 업로드',res:false,note:''}],
   '2026-02-26':[{slot:'',guest:'',prod:'',edit:'',upload:'이노크라스 쇼츠4 업로드',res:false,note:''}],
   '2026-02-27':[{slot:'11:00',guest:'염승환',prod:'양영은',edit:'김태환',upload:'이노크라스 쇼츠5 업로드',res:false,note:''}],
-  // ── 3월 ──
   '2026-03-02':[{slot:'',guest:'',prod:'',edit:'',upload:'07:00 정주호 대표 2부 업로드',res:false,note:''}],
   '2026-03-03':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:'태환 휴가'}],
   '2026-03-04':[{slot:'15:30',guest:'유신익 박사',prod:'양영은',edit:'박채빈',upload:'목요일 오전 업로드',res:false,note:'태환 휴가'}],
@@ -259,7 +253,6 @@ const P = {
   '2026-03-27':[{slot:'10:30',guest:'염승환',prod:'최건일',edit:'김태환',upload:'북터뷰 2부',res:true,note:''}],
   '2026-03-30':[{slot:'15:00',guest:'김영익',prod:'양영은',edit:'박채빈',upload:'',res:false,note:''}],
   '2026-03-31':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
-  // ── 4월 ──
   '2026-04-01':[{slot:'',guest:'',prod:'',edit:'',upload:'김영익 교수 1부',res:false,note:''}],
   '2026-04-02':[{slot:'',guest:'',prod:'',edit:'',upload:'김영익 교수 2부',res:false,note:''}],
   '2026-04-03':[{slot:'14:00',guest:'염승환',prod:'양영은',edit:'김태환',upload:'',res:false,note:'예띠스튜디오 어린이동물티비 (10:30~13:00)'}],
@@ -282,7 +275,6 @@ const P = {
   '2026-04-28':[{slot:'',guest:'',prod:'',edit:'',upload:'김창익 1부',res:false,note:''}],
   '2026-04-29':[{slot:'',guest:'',prod:'',edit:'',upload:'김창익 2부',res:false,note:''}],
   '2026-04-30':[{slot:'10:30',guest:'문홍철',prod:'최건일',edit:'박채빈',upload:'17:00 비욘드 더채움 견과 3부\n문홍철 1부',res:true,note:'예띠스튜디오 오후 어린이 동물티비'}],
-  // ── 5월 ──
   '2026-05-01':[{slot:'10:30',guest:'염승환',prod:'최건일',edit:'박채빈',upload:'문홍철 2부',res:true,note:'고경남 녹화 후 AI 컨펌'},{slot:'13:30',guest:'고경남',prod:'양영은',edit:'박채빈',upload:'',res:false,note:''}],
   '2026-05-04':[{slot:'',guest:'',prod:'',edit:'',upload:'고경남 세무사 업로드',res:false,note:'양영은 휴가'}],
   '2026-05-05':[{slot:'',guest:'',prod:'',edit:'',upload:'김창익 풀버전',res:false,note:''}],
@@ -310,7 +302,6 @@ const P = {
   '2026-05-29':[{slot:'10:30',guest:'염승환',prod:'최건일',edit:'김태환',upload:'',res:true,note:'오후 (13:30~16:00) 예띠스튜디오 어린이 동물티비'},{slot:'17:00',guest:'강환국',prod:'양영은',edit:'박채빈',upload:'',res:false,note:''}],
   '2026-05-30':[{slot:'',guest:'',prod:'',edit:'',upload:'염블리 비밀노트 (토)',res:false,note:''}],
   '2026-05-31':[{slot:'',guest:'',prod:'',edit:'',upload:'염블리 비밀노트 (일)',res:false,note:''}],
-  // ── 6월 ──
   '2026-06-01':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-06-02':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-06-03':[{slot:'',guest:'',prod:'',edit:'',upload:'강환국 1부',res:false,note:''}],
@@ -341,76 +332,112 @@ const P = {
   '2026-06-28':[{slot:'',guest:'',prod:'',edit:'',upload:'염블리 비밀노트 (일)',res:false,note:''}],
   '2026-06-29':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-06-30':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
-  // ── 7월 ──
   '2026-07-01':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-07-02':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-07-03':[{slot:'-',guest:'염승환',prod:'양영은',edit:'',upload:'',res:false,note:''}],
 };
 
-/* ── UTILS ── */
-function toKey(d){return d.toISOString().slice(0,10);}
-function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
-function getMon(d){const r=new Date(d);r.setHours(0,0,0,0);const dw=r.getDay();r.setDate(r.getDate()+(dw===0?-6:1-dw));return r;}
+/* ===================================================
+   UTILS
+=================================================== */
+function toKey(d){
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,'0');
+  const dd=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dd}`;
+}
+function addDays(d,n){
+  const r=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  r.setDate(r.getDate()+n);
+  return r;
+}
+// 월요일을 주의 시작으로, 일요일을 +6번째(마지막)로
+function getMon(d){
+  const r=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  const dw=r.getDay(); // 0=일,1=월,...,6=토
+  // 월요일까지의 거리: 일(0)→-6, 월(1)→0, 화(2)→-1, ..., 토(6)→-5
+  const diff = (dw===0) ? -6 : 1-dw;
+  r.setDate(r.getDate()+diff);
+  return r;
+}
 const DAY_KO=['일','월','화','수','목','금','토'];
 function fmt(d){return `${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KO[d.getDay()]})`;}
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function autoH(ta){ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';}
+function autoH(ta){if(!ta)return;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';}
 
-/* ── STORAGE ── */
-function loadSched(){try{return JSON.parse(localStorage.getItem('mh_sched2'))||{};}catch{return {};}}
-function saveSched(o){localStorage.setItem('mh_sched2',JSON.stringify(o));}
-function loadMemos(){try{return JSON.parse(localStorage.getItem('mh_memos2'))||{};}catch{return {};}}
-function saveMemoStore(o){localStorage.setItem('mh_memos2',JSON.stringify(o));}
+/* ===================================================
+   STORAGE
+=================================================== */
+function loadSched(){try{return JSON.parse(localStorage.getItem('mh_sched3'))||{};}catch{return {};}}
+function saveSched(o){localStorage.setItem('mh_sched3',JSON.stringify(o));}
+function loadMemos(){try{return JSON.parse(localStorage.getItem('mh_memos3'))||{};}catch{return {};}}
+function saveMemoStore(o){localStorage.setItem('mh_memos3',JSON.stringify(o));}
 
-/* ── WEEK STATE ── */
+/* ===================================================
+   STATE
+=================================================== */
 let weekStart=getMon(new Date());
 const todayKey=toKey(new Date());
 
-/* ── GET SLOTS ── */
 function getSlots(key){
   const saved=loadSched();
-  if(saved[key]) return saved[key];
-  if(P[key]) return JSON.parse(JSON.stringify(P[key]));
+  if(saved[key]) return JSON.parse(JSON.stringify(saved[key]));
+  if(P[key])     return JSON.parse(JSON.stringify(P[key]));
   return [{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}];
 }
 
-/* ── SLOT ROW HTML ── */
+/* ===================================================
+   SELECT OPTIONS HTML
+=================================================== */
+function prodOptions(val){
+  return PRODUCERS.map(p=>`<option value="${esc(p)}" ${p===val?'selected':''}>${p||'-- 제작자 --'}</option>`).join('');
+}
+function editOptions(val){
+  return EDITORS.map(e=>`<option value="${esc(e)}" ${e===val?'selected':''}>${e||'-- 편집자 --'}</option>`).join('');
+}
+
+/* ===================================================
+   ROW HTML
+=================================================== */
 function slotRowHTML(key,idx,s,isFirst,dateLabel,dow){
-  const isToday=key===todayKey;
-  const satClass=dow===6?'sat':'';
-  const sunClass=dow===0?'sun':'';
-  const rowClass=isToday?'today-row':'';
-  let dateTd='';
-  if(isFirst){
-    dateTd=`<td class="td-date" id="date-${key}">
-      <div class="date-cell-inner">
-        <span>${esc(dateLabel)}${isToday?'<span class="badge-today">오늘</span>':''}</span>
-        <button class="btn-add-slot" onclick="addSlot('${key}')">＋ 2차 녹화</button>
-      </div>
-    </td>`;
-  } else {
-    dateTd=`<td></td>`;
-  }
-  return `<tr class="${rowClass} ${satClass} ${sunClass}" id="row-${key}-${idx}" data-key="${key}" data-idx="${idx}">
+  const isToday=(key===todayKey);
+  let rowCls='';
+  if(isToday) rowCls+=' today-row';
+  if(dow===6) rowCls+=' sat';
+  if(dow===0) rowCls+=' sun';
+
+  const dateTd = isFirst
+    ? `<td class="td-date" rowspan="1">
+        <div class="date-cell-inner">
+          <span>${esc(dateLabel)}${isToday?'<span class="badge-today">오늘</span>':''}</span>
+          <button class="btn-add-slot" onclick="addSlot('${key}')">＋ 2차 녹화</button>
+        </div>
+       </td>`
+    : `<td><span class="slot-label">2차</span></td>`;
+
+  return `<tr class="${rowCls.trim()}" data-key="${key}" data-idx="${idx}">
     ${dateTd}
-    <td>${isFirst?'':'<span class="slot-label">2차</span>'}<input type="text" class="f-slot" value="${esc(s.slot)}" placeholder="시간"/></td>
-    <td><textarea class="f-guest" rows="1" oninput="autoH(this)">${esc(s.guest)}</textarea></td>
-    <td><input type="text" class="f-prod" value="${esc(s.prod)}" placeholder="제작자"/></td>
-    <td><input type="text" class="f-edit" value="${esc(s.edit)}" placeholder="편집자"/></td>
-    <td><textarea class="f-upload ta-upload" rows="1" oninput="autoH(this)">${esc(s.upload)}</textarea></td>
+    <td><input type="text" class="f-slot" value="${esc(s.slot)}" placeholder="녹화시간"/></td>
+    <td><textarea class="f-guest" oninput="autoH(this)">${esc(s.guest)}</textarea></td>
+    <td><select class="f-prod">${prodOptions(s.prod)}</select></td>
+    <td><select class="f-edit">${editOptions(s.edit)}</select></td>
+    <td><textarea class="f-upload" oninput="autoH(this)">${esc(s.upload)}</textarea></td>
     <td class="res-cell"><input type="checkbox" class="f-res" ${s.res?'checked':''}></td>
-    <td><textarea class="f-note" rows="1" oninput="autoH(this)">${esc(s.note)}</textarea></td>
+    <td><textarea class="f-note" oninput="autoH(this)">${esc(s.note)}</textarea></td>
     <td>${!isFirst?`<button class="btn-del" onclick="delSlot('${key}',${idx})">✕</button>`:'&nbsp;'}</td>
   </tr>`;
 }
 
-/* ── RENDER WEEK ── */
+/* ===================================================
+   RENDER
+=================================================== */
 function render(){
   const tb=document.getElementById('tableBody');
   const ws=weekStart;
   const we=addDays(ws,6);
   document.getElementById('weekTitle').textContent=
     `${ws.getMonth()+1}월 ${ws.getDate()}일 ~ ${we.getMonth()+1}월 ${we.getDate()}일`;
+
   let html='';
   for(let i=0;i<7;i++){
     const d=addDays(ws,i);
@@ -423,16 +450,16 @@ function render(){
     });
   }
   tb.innerHTML=html;
-  // auto-height all textareas
   tb.querySelectorAll('textarea').forEach(ta=>autoH(ta));
-  // load memo
   loadMemoUI();
 }
 
-/* ── ADD / DEL SLOT ── */
+/* ===================================================
+   ADD / DEL SLOT
+=================================================== */
 function addSlot(key){
   const slots=getSlots(key);
-  if(slots.length>=2) return;
+  if(slots.length>=2){toast('2차 녹화까지만 추가 가능합니다');return;}
   slots.push({slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''});
   const saved=loadSched();
   saved[key]=slots;
@@ -441,7 +468,7 @@ function addSlot(key){
 }
 function delSlot(key,idx){
   const slots=getSlots(key);
-  if(slots.length<=1) return;
+  if(slots.length<=1)return;
   slots.splice(idx,1);
   const saved=loadSched();
   saved[key]=slots;
@@ -449,19 +476,21 @@ function delSlot(key,idx){
   render();
 }
 
-/* ── COLLECT & SAVE ── */
+/* ===================================================
+   COLLECT & SAVE
+=================================================== */
 function collectDay(key){
   const rows=document.querySelectorAll(`tr[data-key="${key}"]`);
   const slots=[];
   rows.forEach(tr=>{
     slots.push({
-      slot:tr.querySelector('.f-slot').value,
+      slot: tr.querySelector('.f-slot').value,
       guest:tr.querySelector('.f-guest').value,
-      prod:tr.querySelector('.f-prod').value,
-      edit:tr.querySelector('.f-edit').value,
+      prod: tr.querySelector('.f-prod').value,
+      edit: tr.querySelector('.f-edit').value,
       upload:tr.querySelector('.f-upload').value,
-      res:tr.querySelector('.f-res').checked,
-      note:tr.querySelector('.f-note').value,
+      res:  tr.querySelector('.f-res').checked,
+      note: tr.querySelector('.f-note').value,
     });
   });
   return slots;
@@ -479,7 +508,7 @@ function saveAll(){
   toast('💾 저장되었습니다');
 }
 function clearWeekData(){
-  if(!confirm('이번 주 데이터를 초기화하시겠습니까?')) return;
+  if(!confirm('이번 주 데이터를 DOCS 원본으로 초기화할까요?'))return;
   const saved=loadSched();
   for(let i=0;i<7;i++) delete saved[toKey(addDays(weekStart,i))];
   saveSched(saved);
@@ -487,7 +516,9 @@ function clearWeekData(){
   toast('초기화되었습니다');
 }
 
-/* ── MEMO ── */
+/* ===================================================
+   MEMO
+=================================================== */
 function loadMemoUI(){
   const wk=toKey(weekStart);
   const m=loadMemos();
@@ -500,29 +531,32 @@ function saveMemo(){
   const wk=toKey(weekStart);
   const m=loadMemos();
   m[wk]={
-    yye:document.getElementById('memo-yye').value,
+    yye: document.getElementById('memo-yye').value,
     cgil:document.getElementById('memo-cgil').value,
-    etc:document.getElementById('memo-etc').value,
+    etc: document.getElementById('memo-etc').value,
   };
   saveMemoStore(m);
   toast('메모 저장됨');
 }
 
-/* ── NAVIGATION ── */
+/* ===================================================
+   NAV & KEYBOARD
+=================================================== */
 function changeWeek(dir){weekStart=addDays(weekStart,dir*7);render();}
 function goToday(){weekStart=getMon(new Date());render();}
-
-/* ── TOAST ── */
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2000);
-}
-
-/* ── KEYBOARD ── */
 document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveAll();}
 });
+
+/* ===================================================
+   TOAST
+=================================================== */
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
+}
 
 render();
 </script>
