@@ -16,13 +16,11 @@
 }
 body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--gray-100);font-size:13px;color:#111;}
 
-/* HEADER */
-header{background:var(--primary);color:#fff;padding:0 18px;height:50px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 6px rgba(0,0,0,.2);}
+header{background:var(--primary);color:#fff;padding:0 18px;height:50px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,.2);}
 header h1{font-size:16px;font-weight:700;}
 #lastSaved{font-size:11px;opacity:.8;}
 
-/* WEEK NAV */
-.week-nav{display:flex;align-items:center;gap:8px;background:#fff;padding:8px 18px;position:sticky;top:50px;z-index:200;border-bottom:1px solid var(--gray-200);}
+.week-nav{display:flex;align-items:center;gap:8px;background:#fff;padding:8px 18px;border-bottom:1px solid var(--gray-200);}
 .week-nav button{background:var(--primary);color:#fff;border:none;border-radius:var(--radius);padding:5px 12px;font-size:12px;cursor:pointer;}
 .week-nav button:hover{opacity:.85;}
 .btn-today{background:#10b981!important;}
@@ -30,9 +28,11 @@ header h1{font-size:16px;font-weight:700;}
 #weekTitle{font-size:14px;font-weight:700;min-width:190px;text-align:center;}
 .nav-right{margin-left:auto;display:flex;gap:6px;}
 
-/* TABLE */
-.table-wrap{background:#fff;overflow-x:auto;}
-table{width:100%;border-collapse:collapse;min-width:900px;}
+/* 헤더+네비 고정 래퍼 */
+.sticky-top{position:sticky;top:0;z-index:300;}
+
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:900px;background:#fff;}
 
 col.c-date  {width:100px;}
 col.c-slot  {width:155px;}
@@ -44,10 +44,11 @@ col.c-res   {width:38px;}
 col.c-note  {width:115px;}
 col.c-act   {width:28px;}
 
+/* thead sticky - top은 sticky-top 높이(헤더50+네비42=92px)와 일치 */
+thead{position:sticky;top:92px;z-index:200;}
 thead th{
   background:var(--primary);color:#fff;
   padding:7px 5px;font-size:12px;font-weight:700;
-  position:sticky;top:91px;z-index:100;
   border-right:1px solid rgba(255,255,255,.25);
   white-space:nowrap;text-align:center;
 }
@@ -67,26 +68,19 @@ td.td-date{font-size:12px;font-weight:700;color:var(--primary);white-space:nowra
 .btn-add-slot{font-size:10px;background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;border-radius:3px;padding:2px 7px;cursor:pointer;white-space:nowrap;}
 .btn-add-slot:hover{background:#bae6fd;}
 
-/* inputs */
-table input[type=text], table textarea, table select{
+table input[type=text],table textarea,table select{
   width:100%;border:1px solid var(--gray-200);border-radius:3px;
-  font-size:12px;padding:3px 5px;font-family:inherit;
-  background:#fff;display:block;
+  font-size:12px;padding:3px 5px;font-family:inherit;background:#fff;display:block;
 }
-table input[type=text]:focus,
-table textarea:focus,
-table select:focus{outline:none;border-color:var(--primary);}
+table input[type=text]:focus,table textarea:focus,table select:focus{outline:none;border-color:var(--primary);}
 table textarea{resize:none;overflow:hidden;min-height:24px;}
-table select{cursor:pointer;appearance:auto;}
+table select{cursor:pointer;}
 
-/* resource checkbox */
 .res-cell{text-align:center;vertical-align:middle;}
 .res-cell input[type=checkbox]{width:15px;height:15px;cursor:pointer;}
 
-/* del button */
 .btn-del{background:#ef4444;color:#fff;border:none;border-radius:3px;padding:2px 5px;font-size:10px;cursor:pointer;}
 
-/* MEMO */
 .memo-wrap{background:#fff;padding:14px 18px;margin-top:2px;border-top:2px solid var(--primary);}
 .memo-wrap h3{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;}
 .memo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px;}
@@ -98,7 +92,6 @@ table select{cursor:pointer;appearance:auto;}
 .btn-save:hover{opacity:.85;}
 .btn-clear{background:#e5e7eb;color:#374151;border:none;border-radius:var(--radius);padding:6px 16px;font-size:12px;cursor:pointer;}
 
-/* TOAST */
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:8px 20px;border-radius:20px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:9999;}
 #toast.show{opacity:1;}
 
@@ -107,18 +100,20 @@ table select{cursor:pointer;appearance:auto;}
 </head>
 <body>
 
-<header>
-  <h1>📅 머니올라 근무 &amp; 녹화 일정표 2026</h1>
-  <span id="lastSaved"></span>
-</header>
-
-<div class="week-nav">
-  <button onclick="changeWeek(-1)">◀ 이전 주</button>
-  <div id="weekTitle"></div>
-  <button onclick="changeWeek(1)">다음 주 ▶</button>
-  <div class="nav-right">
-    <button class="btn-today" onclick="goToday()">오늘</button>
-    <button class="btn-save-top" onclick="saveAll()">💾 저장 (Ctrl+S)</button>
+<!-- 헤더+네비를 하나의 sticky 컨테이너로 묶어서 thead top 기준점을 정확히 맞춤 -->
+<div class="sticky-top">
+  <header>
+    <h1>📅 머니올라 근무 &amp; 녹화 일정표 2026</h1>
+    <span id="lastSaved"></span>
+  </header>
+  <div class="week-nav">
+    <button onclick="changeWeek(-1)">◀ 이전 주</button>
+    <div id="weekTitle"></div>
+    <button onclick="changeWeek(1)">다음 주 ▶</button>
+    <div class="nav-right">
+      <button class="btn-today" onclick="goToday()">오늘</button>
+      <button class="btn-save-top" onclick="saveAll()">💾 저장 (Ctrl+S)</button>
+    </div>
   </div>
 </div>
 
@@ -178,13 +173,13 @@ table select{cursor:pointer;appearance:auto;}
 
 <script>
 /* ===================================================
-   팀원 목록
+   팀원 목록 – 제작자: 양영은/최건일만, 편집자: 박채빈/김태환/외주
 =================================================== */
-const PRODUCERS = ['','양영은','최건일','윤지해','외주'];
+const PRODUCERS = ['','양영은','최건일'];
 const EDITORS   = ['','박채빈','김태환','외주'];
 
 /* ===================================================
-   PRESET 데이터 – DOCS 원본 날짜 1:1 매핑
+   PRESET 데이터
 =================================================== */
 const P = {
   '2026-01-01':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
@@ -351,13 +346,11 @@ function addDays(d,n){
   r.setDate(r.getDate()+n);
   return r;
 }
-// 월요일을 주의 시작으로, 일요일을 +6번째(마지막)로
 function getMon(d){
   const r=new Date(d.getFullYear(),d.getMonth(),d.getDate());
-  const dw=r.getDay(); // 0=일,1=월,...,6=토
-  // 월요일까지의 거리: 일(0)→-6, 월(1)→0, 화(2)→-1, ..., 토(6)→-5
-  const diff = (dw===0) ? -6 : 1-dw;
-  r.setDate(r.getDate()+diff);
+  const dw=r.getDay();
+  // 일(0)→-6, 월(1)→0, 화(2)→-1, 수(3)→-2, 목(4)→-3, 금(5)→-4, 토(6)→-5
+  r.setDate(r.getDate()+(dw===0?-6:1-dw));
   return r;
 }
 const DAY_KO=['일','월','화','수','목','금','토'];
@@ -387,13 +380,17 @@ function getSlots(key){
 }
 
 /* ===================================================
-   SELECT OPTIONS HTML
+   SELECT OPTIONS
 =================================================== */
 function prodOptions(val){
-  return PRODUCERS.map(p=>`<option value="${esc(p)}" ${p===val?'selected':''}>${p||'-- 제작자 --'}</option>`).join('');
+  return PRODUCERS.map(p=>
+    `<option value="${esc(p)}" ${p===val?'selected':''}>${p||'-- 제작자 --'}</option>`
+  ).join('');
 }
 function editOptions(val){
-  return EDITORS.map(e=>`<option value="${esc(e)}" ${e===val?'selected':''}>${e||'-- 편집자 --'}</option>`).join('');
+  return EDITORS.map(e=>
+    `<option value="${esc(e)}" ${e===val?'selected':''}>${e||'-- 편집자 --'}</option>`
+  ).join('');
 }
 
 /* ===================================================
@@ -406,14 +403,14 @@ function slotRowHTML(key,idx,s,isFirst,dateLabel,dow){
   if(dow===6) rowCls+=' sat';
   if(dow===0) rowCls+=' sun';
 
-  const dateTd = isFirst
-    ? `<td class="td-date" rowspan="1">
+  const dateTd=isFirst
+    ?`<td class="td-date">
         <div class="date-cell-inner">
           <span>${esc(dateLabel)}${isToday?'<span class="badge-today">오늘</span>':''}</span>
           <button class="btn-add-slot" onclick="addSlot('${key}')">＋ 2차 녹화</button>
         </div>
-       </td>`
-    : `<td><span class="slot-label">2차</span></td>`;
+      </td>`
+    :`<td><span class="slot-label">2차</span></td>`;
 
   return `<tr class="${rowCls.trim()}" data-key="${key}" data-idx="${idx}">
     ${dateTd}
@@ -430,6 +427,8 @@ function slotRowHTML(key,idx,s,isFirst,dateLabel,dow){
 
 /* ===================================================
    RENDER
+   ※ 일요일이 먼저 오는 주(일~토) 문제 방지:
+     getMon()으로 월요일 기준 잡고 i=0~6(월~일) 순서로 렌더링
 =================================================== */
 function render(){
   const tb=document.getElementById('tableBody');
@@ -440,10 +439,10 @@ function render(){
 
   let html='';
   for(let i=0;i<7;i++){
-    const d=addDays(ws,i);
+    const d=addDays(ws,i);   // ws=월요일, +0~+6 → 월~일
     const key=toKey(d);
+    const dow=d.getDay();    // 월(1)...토(6)일(0)
     const label=fmt(d);
-    const dow=d.getDay();
     const slots=getSlots(key);
     slots.forEach((s,idx)=>{
       html+=slotRowHTML(key,idx,s,idx===0,label,dow);
@@ -477,7 +476,7 @@ function delSlot(key,idx){
 }
 
 /* ===================================================
-   COLLECT & SAVE
+   SAVE
 =================================================== */
 function collectDay(key){
   const rows=document.querySelectorAll(`tr[data-key="${key}"]`);
@@ -540,7 +539,7 @@ function saveMemo(){
 }
 
 /* ===================================================
-   NAV & KEYBOARD
+   NAV
 =================================================== */
 function changeWeek(dir){weekStart=addDays(weekStart,dir*7);render();}
 function goToday(){weekStart=getMon(new Date());render();}
