@@ -17,126 +17,123 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
      background:var(--g2);color:var(--g9);font-size:12px;line-height:1.4;}
 
 /* ── 헤더 ── */
-header{background:var(--p);color:#fff;padding:0 16px;height:48px;
-       display:flex;align-items:center;justify-content:space-between;
-       position:sticky;top:0;z-index:300;box-shadow:var(--shl);}
-header h1{font-size:.95rem;font-weight:700;white-space:nowrap;}
-header h1 span{opacity:.7;font-weight:400;font-size:.8rem;margin-left:6px;}
-#lastSaved{font-size:.7rem;opacity:.75;white-space:nowrap;}
+header{background:var(--p);color:#fff;padding:0 16px;height:46px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:300;box-shadow:var(--shl);}
+header h1{font-size:.92rem;font-weight:700;}
+header h1 span{opacity:.7;font-weight:400;font-size:.78rem;margin-left:6px;}
+#lastSaved{font-size:.68rem;opacity:.75;}
 
-/* ── 주간 네비 ── */
+/* ── 네비 ── */
 .wnav{display:flex;align-items:center;gap:6px;background:var(--g0);
-      border-bottom:2px solid var(--g3);padding:6px 16px;
-      position:sticky;top:48px;z-index:299;}
+  border-bottom:2px solid var(--g3);padding:5px 16px;
+  position:sticky;top:46px;z-index:299;}
 .wnav button{background:var(--g2);border:1px solid var(--g3);border-radius:var(--r);
-             padding:4px 10px;font-size:.75rem;cursor:pointer;color:var(--g7);
-             transition:all .12s;white-space:nowrap;}
+  padding:3px 10px;font-size:.73rem;cursor:pointer;color:var(--g7);transition:all .12s;white-space:nowrap;}
 .wnav button:hover{background:var(--pl);color:var(--p);border-color:var(--p);}
-.wnav .wtitle{font-size:.82rem;font-weight:700;color:var(--g7);flex:1;text-align:center;}
+.wtitle{font-size:.8rem;font-weight:700;color:var(--g7);flex:1;text-align:center;}
 .btn-today{background:var(--acc)!important;color:#fff!important;border-color:var(--acc)!important;}
 
 /* ── 메인 ── */
-main{padding:10px 16px 60px;}
-
-/* ── 메모 ── */
-.memo{background:var(--g0);border-radius:var(--r);box-shadow:var(--sh);
-      padding:8px 12px;margin-bottom:10px;}
-.memo h3{font-size:.78rem;font-weight:700;color:var(--g7);margin-bottom:7px;}
-.memo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-.memo-item label{display:block;font-size:.68rem;font-weight:700;color:var(--g6);margin-bottom:3px;}
-.memo-item textarea{width:100%;border:1px solid var(--g3);border-radius:var(--r);
-                    padding:4px 6px;font-size:.75rem;font-family:inherit;
-                    resize:vertical;min-height:40px;background:var(--g1);}
-.memo-item textarea:focus{outline:none;border-color:var(--p);background:var(--g0);}
-.memo-footer{display:flex;justify-content:flex-end;margin-top:6px;}
-@media(max-width:560px){.memo-grid{grid-template-columns:1fr;}}
+main{padding:10px 16px 20px;}
 
 /* ── 테이블 래퍼 ── */
-.twrap{background:var(--g0);border-radius:var(--r);box-shadow:var(--sh);overflow:auto;}
+.twrap{background:var(--g0);border-radius:var(--r);box-shadow:var(--sh);overflow:auto;margin-bottom:12px;}
 
-/* ── 스케줄 테이블 ── */
-table{width:100%;border-collapse:collapse;min-width:820px;}
-thead th{background:var(--p);color:#fff;padding:6px 8px;font-size:.72rem;
-         font-weight:700;text-align:center;white-space:nowrap;
-         border-right:1px solid rgba(255,255,255,.15);position:sticky;top:0;z-index:10;}
+/* ── 테이블 ── */
+table{width:100%;border-collapse:collapse;min-width:760px;table-layout:fixed;}
+thead th{background:var(--p);color:#fff;padding:5px 6px;font-size:.7rem;font-weight:700;
+  text-align:center;white-space:nowrap;border-right:1px solid rgba(255,255,255,.15);}
 thead th:last-child{border-right:none;}
 
-/* 열 너비 */
-col.c-date {width:100px;}
-col.c-time {width:76px;}
-col.c-guest{width:110px;}
-col.c-prod {width:76px;}
-col.c-edit {width:76px;}
-col.c-up   {width:160px;}
-col.c-res  {width:42px;}
-col.c-note {width:130px;}
-col.c-act  {width:32px;}
+/* 열 너비 고정 */
+col.c-date {width:118px;}
+col.c-time {width:62px;}
+col.c-guest{width:100px;}
+col.c-prod {width:62px;}
+col.c-edit {width:62px;}
+col.c-up   {width:auto;}   /* 나머지 공간 전부 */
+col.c-res  {width:36px;}
+col.c-note {width:100px;}
 
 /* ── 날짜 헤더 행 ── */
 tr.dh td{background:var(--g2);padding:4px 8px;font-weight:700;font-size:.78rem;
-         border-top:2px solid var(--g4);border-bottom:1px solid var(--g3);}
+  border-top:2px solid var(--g4);border-bottom:1px solid var(--g3);}
 tr.dh.is-today td{background:var(--pl);}
 tr.dh.is-sat   td{border-left:3px solid var(--sat);}
 tr.dh.is-sun   td{border-left:3px solid var(--sun);}
-tr.dh.is-today td .dt{color:var(--p);}
-tr.dh.is-sat   td .dt{color:var(--sat);}
-tr.dh.is-sun   td .dt{color:var(--sun);}
-.dbrow{display:flex;align-items:center;gap:5px;}
+tr.dh.is-today .dt{color:var(--p);}
+tr.dh.is-sat   .dt{color:var(--sat);}
+tr.dh.is-sun   .dt{color:var(--sun);}
+.dbrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .bgt{display:inline-block;padding:1px 5px;border-radius:99px;font-size:.6rem;font-weight:700;}
 .bgt-today{background:var(--p);color:#fff;}
 .bgt-hol  {background:#fee2e2;color:#991b1b;}
 
+/* 2차 추가 버튼 — 날짜 헤더 안 */
+.btn-add2{background:var(--g3);border:1px solid var(--g4);border-radius:3px;
+  color:var(--g6);font-size:.62rem;cursor:pointer;padding:1px 6px;margin-left:2px;
+  transition:all .12s;white-space:nowrap;}
+.btn-add2:hover{background:var(--pl);color:var(--p);border-color:var(--p);}
+.btn-add2.hidden{display:none;}
+
 /* ── 슬롯 행 ── */
-tr.sr td{padding:2px 6px;border-bottom:1px solid var(--g2);vertical-align:middle;}
+tr.sr td{padding:2px 5px;border-bottom:1px solid var(--g2);vertical-align:top;}
 tr.sr.sr2 td{background:#fafafa;}
+tr.sr-last td{border-bottom:2px solid var(--g3);}
 
 /* ── 인풋 공통 ── */
-.ci{width:100%;border:1px solid transparent;border-radius:3px;padding:3px 5px;
-    font-size:.75rem;font-family:inherit;background:transparent;color:var(--g9);
-    transition:border-color .12s,background .12s;}
+.ci{width:100%;border:1px solid transparent;border-radius:3px;padding:2px 4px;
+  font-size:.75rem;font-family:inherit;background:transparent;color:var(--g9);
+  transition:border-color .12s,background .12s;
+  resize:none;overflow:hidden;white-space:pre-wrap;word-break:break-all;}
 .ci:hover{border-color:var(--g4);background:var(--g0);}
 .ci:focus{outline:none;border-color:var(--p);background:var(--g0);
-          box-shadow:0 0 0 2px rgba(26,86,219,.1);}
-textarea.ci{resize:vertical;min-height:28px;line-height:1.35;}
-select.ci{cursor:pointer;height:28px;}
-input[type=time].ci{min-width:70px;height:28px;}
+  box-shadow:0 0 0 2px rgba(26,86,219,.1);}
+/* textarea — 자동 높이, resize 없음 */
+textarea.ci{min-height:24px;overflow:hidden;}
+select.ci{cursor:pointer;height:26px;resize:none;}
+input[type=time].ci{height:26px;min-width:58px;}
 
 /* ── 리소스 체크 ── */
-.rchk{display:flex;align-items:center;justify-content:center;}
+.rchk{display:flex;align-items:center;justify-content:center;padding-top:3px;}
 .rchk input{width:14px;height:14px;accent-color:var(--p);cursor:pointer;}
 
-/* ── + 버튼 (2차 추가) ── */
-.btn-add{background:none;border:1px dashed var(--g4);border-radius:3px;
-         color:var(--g5);font-size:.7rem;cursor:pointer;padding:2px 8px;
-         transition:all .12s;white-space:nowrap;}
-.btn-add:hover{border-color:var(--p);color:var(--p);background:var(--pl);}
-
-/* ── - 버튼 (2차 삭제) ── */
-.btn-del{background:none;border:none;color:var(--g5);font-size:.9rem;
-         cursor:pointer;padding:0 4px;line-height:1;transition:color .12s;}
+/* ── 슬롯 라벨 + 삭제 ── */
+.slot-lbl{text-align:center;color:var(--g5);font-size:.65rem;padding-top:4px;white-space:nowrap;}
+.btn-del{background:none;border:none;color:var(--g4);font-size:.75rem;cursor:pointer;
+  padding:0;line-height:1;display:block;margin:0 auto;transition:color .12s;}
 .btn-del:hover{color:var(--dan);}
 
-/* ── 날짜 행 하단 (저장/초기화) ── */
-tr.sr-foot td{padding:2px 6px 5px;border-bottom:2px solid var(--g3);text-align:right;}
+/* ── 저장/초기화 행 ── */
+tr.sf td{padding:2px 6px 5px;text-align:right;border-bottom:3px solid var(--g3);}
 .btn-save{background:var(--p);color:#fff;border:none;border-radius:3px;
-          padding:3px 10px;font-size:.7rem;font-weight:700;cursor:pointer;}
+  padding:3px 10px;font-size:.7rem;font-weight:700;cursor:pointer;}
 .btn-save:hover{background:#1348c8;}
-.btn-clr{background:var(--g2);color:var(--g6);border:1px solid var(--g3);
-         border-radius:3px;padding:3px 8px;font-size:.7rem;cursor:pointer;margin-right:5px;}
+.btn-clr{background:var(--g2);color:var(--g6);border:1px solid var(--g3);border-radius:3px;
+  padding:3px 8px;font-size:.7rem;cursor:pointer;margin-right:4px;}
 .btn-clr:hover{background:#fee2e2;color:var(--dan);border-color:var(--dan);}
 
-/* ── 토스트 ── */
-#toast{position:fixed;bottom:16px;right:16px;background:var(--g9);color:#fff;
-       padding:7px 14px;border-radius:var(--r);font-size:.78rem;
-       opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;
-       pointer-events:none;z-index:9999;}
-#toast.show{opacity:1;transform:translateY(0);}
+/* ── 메모 섹션 (하단) ── */
+.memo{background:var(--g0);border-radius:var(--r);box-shadow:var(--sh);padding:10px 14px;}
+.memo h3{font-size:.78rem;font-weight:700;color:var(--g7);margin-bottom:8px;}
+.memo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.memo-item label{display:block;font-size:.68rem;font-weight:700;color:var(--g6);margin-bottom:3px;}
+.memo-item textarea{width:100%;border:1px solid var(--g3);border-radius:var(--r);
+  padding:4px 6px;font-size:.75rem;font-family:inherit;resize:vertical;min-height:44px;background:var(--g1);}
+.memo-item textarea:focus{outline:none;border-color:var(--p);background:var(--g0);}
+.memo-footer{display:flex;justify-content:flex-end;margin-top:7px;}
+@media(max-width:560px){.memo-grid{grid-template-columns:1fr;}}
 
-/* ── 저장 펄스 ── */
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.45)}
-                 70%{box-shadow:0 0 0 7px rgba(16,185,129,0)}
-                 100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
-.pulsed{animation:pulse .55s ease-out;}
+/* ── 토스트 ── */
+#toast{position:fixed;bottom:14px;right:14px;background:var(--g9);color:#fff;
+  padding:6px 13px;border-radius:var(--r);font-size:.76rem;
+  opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;
+  pointer-events:none;z-index:9999;}
+#toast.show{opacity:1;transform:translateY(0);}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}
+  70%{box-shadow:0 0 0 6px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.pulsed{animation:pulse .5s ease-out;}
 </style>
 </head>
 <body>
@@ -154,7 +151,26 @@ tr.sr-foot td{padding:2px 6px 5px;border-bottom:2px solid var(--g3);text-align:r
 </div>
 
 <main>
-  <!-- 메모 -->
+  <!-- 스케줄 테이블 -->
+  <div class="twrap">
+    <table>
+      <colgroup>
+        <col class="c-date"><col class="c-time"><col class="c-guest">
+        <col class="c-prod"><col class="c-edit"><col class="c-up">
+        <col class="c-res"><col class="c-note">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>촬영일</th><th>녹화시간</th><th>출연자</th>
+          <th>제작자</th><th>편집자</th><th>업로드 아이템</th>
+          <th>리소스</th><th>특이사항</th>
+        </tr>
+      </thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+
+  <!-- 주간 메모 (하단) -->
   <div class="memo">
     <h3>📝 주간 보고서 근태 및 특이사항</h3>
     <div class="memo-grid">
@@ -169,388 +185,373 @@ tr.sr-foot td{padding:2px 6px 5px;border-bottom:2px solid var(--g3);text-align:r
       <button class="btn-save" onclick="saveMemo()">메모 저장</button>
     </div>
   </div>
-
-  <!-- 테이블 -->
-  <div class="twrap">
-    <table>
-      <colgroup>
-        <col class="c-date"><col class="c-time"><col class="c-guest">
-        <col class="c-prod"><col class="c-edit"><col class="c-up">
-        <col class="c-res"><col class="c-note"><col class="c-act">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>촬영일</th><th>녹화시간</th><th>출연자</th>
-          <th>제작자</th><th>편집자</th><th>업로드 아이템</th>
-          <th>리소스</th><th>특이사항</th><th></th>
-        </tr>
-      </thead>
-      <tbody id="tb"></tbody>
-    </table>
-  </div>
 </main>
+
 <div id="toast"></div>
 
 <script>
-/* ════ 상수 ════ */
-const DAY_KO=['일','월','화','수','목','금','토'];
-const MBR=['','양영은','최건일','김태환','박채빈','외주 제작','외주'];
-const HOL={
-  '2026-01-01':'신정','2026-01-28':'설날연휴','2026-01-29':'설날','2026-01-30':'설날연휴',
-  '2026-03-01':'삼일절','2026-05-05':'어린이날','2026-05-24':'부처님오신날',
+/* ━━━━━━━━━━━━━━━━━━━━ 상수 ━━━━━━━━━━━━━━━━━━━━ */
+const DAY_KO = ['일','월','화','수','목','금','토'];
+const MBR    = ['','양영은','최건일','김태환','박채빈','외주 제작','외주'];
+const HOL = {
+  '2026-01-01':'신정',
+  '2026-01-28':'설날연휴','2026-01-29':'설날','2026-01-30':'설날연휴',
+  '2026-03-01':'삼일절',
+  '2026-05-05':'어린이날','2026-05-24':'부처님오신날',
   '2026-06-06':'현충일','2026-08-15':'광복절',
   '2026-09-24':'추석연휴','2026-09-25':'추석','2026-09-26':'추석연휴',
   '2026-10-03':'개천절','2026-10-09':'한글날','2026-12-25':'크리스마스'
 };
 
-/* ════ PRESET — 독스 원본 1:1 대조 완료 ════
-   날짜별 배열. 각 슬롯: {time, guest, prod, edit, upload, res, note}
-   ★ 토·일 포함 전 날짜 업로드 열 직접 기입
-*/
-const P={
-/* 1월 */
-'2026-01-01':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-01-02':[{t:'',g:'염승환',p:'양영은',e:'박채빈',u:'',r:0,n:''}],
-'2026-01-05':[{t:'',g:'',p:'',e:'',u:'페르소나AI 풀버전업로드 (17:00)',r:0,n:''}],
-'2026-01-06':[{t:'10:30',g:'한상춘',p:'최건일',e:'김태환',u:'',r:1,n:''}],
-'2026-01-07':[{t:'',g:'',p:'',e:'',u:'한상춘 위원',r:0,n:'김태환 외주\n양영은 CES'}],
-'2026-01-08':[{t:'13:00',g:'어린이 동물티비\n예띠스튜디오 사용',p:'',e:'',u:'',r:0,n:'김태환 외주\n양영은 CES'}],
-'2026-01-09':[{t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'김경민교수 2부 업로드 (7:00)',r:1,n:'양영은 CES'}],
-'2026-01-12':[{t:'',g:'',p:'',e:'',u:'코자아 풀버전 업로드(17:00)',r:0,n:'양영은 휴가'}],
-'2026-01-13':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'양영은 휴가'}],
-'2026-01-14':[{t:'09:00',g:'오건영',p:'최건일',e:'김태환',u:'월간오건영 1부',r:1,n:'양영은 휴가'}],
-'2026-01-15':[{t:'',g:'',p:'',e:'',u:'월간오건영 2부',r:0,n:'양영은 휴가'}],
-'2026-01-16':[
-  {t:'10:50',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''},
-  {t:'14:00',g:'북터뷰(정주용 의장)',p:'양영은',e:'박채빈',u:'',r:0,n:''}
-],
-'2026-01-17':[{t:'',g:'',p:'',e:'',u:'염블리 1부 (9:00)',r:0,n:''}],
-'2026-01-18':[{t:'',g:'',p:'',e:'',u:'염블리 2부 (9:00)\n정주용 북터뷰 1부 업로드',r:0,n:''}],
-'2026-01-19':[{t:'',g:'',p:'',e:'',u:'정주용 북터뷰 2부 업로드\n코자아 쇼츠1 (7:00)',r:0,n:''}],
-'2026-01-20':[{t:'',g:'',p:'',e:'',u:'정주용 북터뷰 풀버전 업로드\n코자아 쇼츠2 (7:00)',r:0,n:''}],
-'2026-01-21':[
-  {t:'09:00',g:'장동선 CES 결산',p:'양영은',e:'김태환',u:'코자아 쇼츠3 (7:00)',r:1,n:''},
-  {t:'14:00',g:'윤지해 랩장',p:'최건일',e:'박채빈',u:'',r:0,n:''}
-],
-'2026-01-22':[{t:'',g:'',p:'',e:'',u:'코자아 쇼츠4 (7:00)\n윤지해 랩장 1부 업로드',r:0,n:''}],
-'2026-01-23':[
-  {t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'코자아 쇼츠5 (7:00)\n윤지해 랩장 2부 업로드',r:1,n:''},
-  {t:'14:00',g:'북터뷰(홍진채)',p:'양영은',e:'박채빈',u:'',r:0,n:''}
-],
-'2026-01-26':[{t:'',g:'',p:'',e:'',u:'피터앤김 풀버전 업로드(17:00)',r:0,n:''}],
-'2026-01-27':[{t:'',g:'중소기업중앙회 녹화',p:'양영은',e:'외주 제작',u:'',r:0,n:''}],
-'2026-01-28':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-01-29':[{t:'14:00',g:'북터뷰\n세빛희 작가',p:'양영은',e:'',u:'',r:0,n:'최건일 휴가'}],
-'2026-01-30':[{t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:'최건일 휴가'}],
-/* 2월 */
-'2026-02-02':[{t:'',g:'',p:'',e:'',u:'홍진채 북터뷰 1부 업로드(7:00)',r:0,n:'최건일 휴가'}],
-'2026-02-03':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'최건일 휴가'}],
-'2026-02-04':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'양영은 휴가'}],
-'2026-02-05':[{t:'10:30',g:'문홍철',p:'최건일',e:'박채빈',u:'오종관 대표 1부 업로드(17:00)\n새빛희 북터뷰 1부 업로드',r:1,n:'양영은 휴가\n*12:30-15:00 어린이 동물티비 예띠스튜디오'}],
-'2026-02-06':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'',r:1,n:'양영은 휴가'}],
-'2026-02-09':[{t:'',g:'',p:'',e:'',u:'홍진채 북터뷰 2부 업로드(7:00)',r:0,n:''}],
-'2026-02-10':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'하나래 연기'}],
-'2026-02-11':[{t:'10:30',g:'이경준 본부장(로봇)',p:'최건일',e:'김태환',u:'',r:1,n:'채빈 휴무'}],
-'2026-02-12':[{t:'',g:'',p:'',e:'',u:'오종관 대표 2부 업로드(17:00)\n새빛희 북터뷰 2부 업로드',r:0,n:'채빈 휴무'}],
-'2026-02-13':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'',r:1,n:'채빈 휴무'}],
-'2026-02-16':[{t:'',g:'',p:'',e:'',u:'홍진채 북터뷰 풀버전 업로드(7:00)',r:0,n:'설날 연휴'}],
-'2026-02-17':[{t:'',g:'',p:'',e:'',u:'이경준(로봇1)',r:0,n:'설날'}],
-'2026-02-18':[{t:'',g:'',p:'',e:'',u:'이경준(로봇2)',r:0,n:'설날 연휴'}],
-'2026-02-19':[{t:'11:00',g:'정주호',p:'양영은',e:'박채빈',u:'오종관 대표 풀버전 업로드(17:00)\n새빛희 북터뷰 풀버전 업로드',r:0,n:'태환 휴무'}],
-'2026-02-20':[{t:'11:00',g:'염승환',p:'최건일',e:'박채빈',u:'',r:1,n:'태환 휴무'}],
-'2026-02-23':[{t:'15:00',g:'고경남',p:'양영은',e:'김태환',u:'이노크라스 쇼츠1 업로드\n노란우산 미드폼 업로드',r:0,n:''}],
-'2026-02-24':[{t:'',g:'',p:'',e:'',u:'이노크라스 쇼츠2 업로드\n고경남 세무사 업로드',r:0,n:''}],
-'2026-02-25':[{t:'',g:'',p:'',e:'',u:'이노크라스 쇼츠3 업로드',r:0,n:''}],
-'2026-02-26':[{t:'',g:'',p:'',e:'',u:'이노크라스 쇼츠4 업로드',r:0,n:''}],
-'2026-02-27':[{t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'이노크라스 쇼츠5 업로드',r:0,n:''}],
-/* 3월 */
-'2026-03-02':[{t:'',g:'',p:'',e:'',u:'07:00 정주호 대표 2부 업로드',r:0,n:''}],
-'2026-03-03':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'태환 휴가'}],
-'2026-03-04':[{t:'15:30',g:'유신익 박사',p:'양영은',e:'박채빈',u:'목요일 오전 업로드',r:0,n:'태환 휴가'}],
-'2026-03-05':[{t:'10:30',g:'하나래 팀장',p:'최건일',e:'박채빈',u:'하나래 1부',r:1,n:'태환 휴가'}],
-'2026-03-06':[{t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'하나래 2부',r:1,n:'태환 휴가'}],
-'2026-03-09':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'태환 휴가\n오후 어린이동물티비 예띠스튜디오'}],
-'2026-03-10':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-03-11':[{t:'11:00',g:'하창완 본부장',p:'양영은',e:'김태환',u:'11일 오후 1부\n12일 2부 업로드',r:0,n:''}],
-'2026-03-12':[{t:'16:00',g:'강환국 북터뷰',p:'양영은',e:'박채빈',u:'',r:0,n:'14일 오후 업로드'}],
-'2026-03-13':[
-  {t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''},
-  {t:'13:00',g:'성상현',p:'최건일',e:'박채빈',u:'',r:1,n:''}
-],
-'2026-03-16':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-03-17':[{t:'',g:'',p:'',e:'',u:'성상현 1부',r:0,n:''}],
-'2026-03-18':[{t:'',g:'',p:'',e:'',u:'성상현 2부',r:0,n:''}],
-'2026-03-19':[{t:'15:00',g:'북터뷰',p:'양영은',e:'김태환',u:'',r:0,n:''}],
-'2026-03-20':[
-  {t:'09:00',g:'오건영',p:'최건일',e:'박채빈',u:'',r:1,n:''},
-  {t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''}
-],
-'2026-03-23':[{t:'14:00',g:'이현지(하이브)',p:'최건일',e:'박채빈',u:'오건영 1부\n이현지',r:1,n:''}],
-'2026-03-24':[{t:'10:30',g:'문홍철',p:'최건일',e:'김태환',u:'오건영 2부\n(오후)북터뷰 1부',r:1,n:''}],
-'2026-03-25':[{t:'',g:'',p:'',e:'',u:'문홍철 1부',r:0,n:''}],
-'2026-03-26':[{t:'',g:'비욘드비즈',p:'양영은',e:'외주',u:'문홍철 2부',r:0,n:''}],
-'2026-03-27':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'북터뷰 2부',r:1,n:''}],
-'2026-03-30':[{t:'15:00',g:'김영익',p:'양영은',e:'박채빈',u:'',r:0,n:''}],
-'2026-03-31':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-/* 4월 */
-'2026-04-01':[{t:'',g:'',p:'',e:'',u:'김영익 교수 1부',r:0,n:''}],
-'2026-04-02':[{t:'',g:'',p:'',e:'',u:'김영익 교수 2부',r:0,n:''}],
-'2026-04-03':[{t:'14:00',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:'예띠스튜디오 어린이동물티비(10:30-13:00)'}],
-'2026-04-06':[{t:'16:00',g:'김민석 전 국방부 대변인',p:'양영은',e:'김태환',u:'북터뷰 3부',r:0,n:''}],
-'2026-04-07':[
-  {t:'09:00',g:'성상현',p:'최건일',e:'박채빈',u:'',r:1,n:''},
-  {t:'14:00',g:'보험협회',p:'최건일',e:'박채빈',u:'',r:0,n:''}
-],
-'2026-04-08':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-04-09':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-04-10':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'보험협회 1부\n북터뷰 풀버전',r:1,n:''}],
-'2026-04-13':[{t:'',g:'',p:'',e:'',u:'보험협회 2부\n성상현 1부',r:0,n:''}],
-'2026-04-14':[{t:'14:00',g:'이현지(엔터)',p:'최건일',e:'박채빈',u:'성상현 2부',r:1,n:''}],
-'2026-04-15':[{t:'',g:'',p:'',e:'',u:'이현지 1부',r:0,n:''}],
-'2026-04-16':[{t:'',g:'',p:'',e:'',u:'이현지 2부',r:0,n:''}],
-'2026-04-17':[{t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'07:00 비욘드 더채움 견과 1부\n성상현 풀버전',r:0,n:''}],
-'2026-04-20':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-04-21':[{t:'',g:'',p:'',e:'',u:'이현지 풀버전',r:0,n:''}],
-'2026-04-22':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-04-23':[{t:'15:00',g:'LG전자 김영재 상무(로봇&AI)\n&유웅환 박사',p:'양영은',e:'박채빈',u:'17:00 비욘드 더채움견과 2부',r:0,n:''}],
-'2026-04-24':[
-  {t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''},
-  {t:'이어서',g:'염승환',p:'양영은',e:'박채빈',u:'',r:0,n:''}
-],
-'2026-04-27':[{t:'11:00',g:'김창익',p:'양영은',e:'김태환',u:'7시 염승환 주주환원',r:0,n:''}],
-'2026-04-28':[{t:'',g:'',p:'',e:'',u:'김창익 1부',r:0,n:''}],
-'2026-04-29':[{t:'',g:'',p:'',e:'',u:'김창익 2부',r:0,n:''}],
-'2026-04-30':[{t:'10:30',g:'문홍철',p:'최건일',e:'박채빈',u:'17:00 비욘드 더채움견과 3부\n문홍철 1부',r:1,n:'예띠스튜디오 오후 어린이 동물티비'}],
-/* 5월 */
-'2026-05-01':[
-  {t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'문홍철 2부',r:1,n:''},
-  {t:'13:30',g:'고경남',p:'양영은',e:'박채빈',u:'',r:0,n:'고경남 녹화 후 AI 컨펌'}
-],
-'2026-05-04':[{t:'',g:'',p:'',e:'',u:'고경남 세무사 업로드',r:0,n:'영은 기자님 휴가'}],
-'2026-05-05':[{t:'',g:'',p:'',e:'',u:'김창익 풀버전',r:0,n:''}],
-'2026-05-06':[{t:'10:00',g:'오건영',p:'양영은',e:'김태환',u:'오건영 1부',r:0,n:''}],
-'2026-05-07':[{t:'',g:'',p:'',e:'',u:'오건영 2부',r:0,n:''}],
-'2026-05-08':[{t:'12:30',g:'염승환',p:'양영은',e:'김태환',u:'아침 와이즈파트너스 비욘드비즈 1부',r:0,n:''}],
-'2026-05-11':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-05-12':[{t:'10:00',g:'유신익 박사',p:'양영은',e:'박채빈',u:'',r:0,n:''}],
-'2026-05-13':[{t:'',g:'',p:'',e:'',u:'유신익박사 1부',r:0,n:''}],
-'2026-05-14':[{t:'',g:'',p:'',e:'',u:'비욘드비즈 더채움 풀버전\n(1,2부 합본)',r:0,n:''}],
-'2026-05-15':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'오전 7시 유신익 박사 2부',r:1,n:''}],
-/* ★ 5월 16일(토) — 독스 직접 확인: 업로드 = '염블리 비밀노트 (토)' */
-'2026-05-16':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
-/* ★ 5월 17일(일) — 독스 직접 확인: 업로드 = '염블리 비밀노트 (일)' */
-'2026-05-17':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
-'2026-05-18':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-05-19':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-05-20':[
-  {t:'10:30',g:'박세익',p:'최건일',e:'박채빈',u:'',r:1,n:''},
-  {t:'11:30(녹화 마치는대로)',g:'유신익',p:'양영은',e:'김태환',u:'',r:1,n:''}
-],
-'2026-05-21':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-05-22':[{t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'(오전)유신익 북터뷰 1부',r:0,n:''}],
-/* ★ 5월 23일(토) — 독스 직접 확인 */
-'2026-05-23':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)\n(오후)와이즈파트너즈 2부 비욘드비즈',r:0,n:''}],
-/* ★ 5월 24일(일) — 독스 직접 확인 */
-'2026-05-24':[{t:'',g:'',p:'',e:'',u:'(오전)염블리 비밀노트 (일)\n(17:00)유신익 북터뷰 2부',r:0,n:''}],
-'2026-05-25':[{t:'',g:'',p:'',e:'',u:'(오후)유신익 북터뷰 풀버전',r:0,n:''}],
-'2026-05-26':[{t:'10:00',g:'성상현',p:'최건일',e:'김태환',u:'',r:1,n:''}],
-'2026-05-27':[{t:'',g:'',p:'',e:'',u:'성상현 1부',r:0,n:''}],
-'2026-05-28':[{t:'14:00',g:'비욘드비즈\n-디자이노블 촬영(출장)',p:'양영은',e:'외주',u:'성상현 2부\n비욘드비즈 풀버전 와이즈파트너스',r:0,n:''}],
-'2026-05-29':[
-  {t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'',r:1,n:'오후(13:30~16:00) 예띠스튜디오 어린이 동물티비'},
-  {t:'17:00',g:'강환국',p:'양영은',e:'박채빈',u:'',r:0,n:''}
-],
-/* ★ 5월 30일(토) — 독스 직접 확인 */
-'2026-05-30':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
-/* ★ 5월 31일(일) — 독스 직접 확인 */
-'2026-05-31':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
-/* 6월 */
-'2026-06-01':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-02':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-03':[{t:'',g:'',p:'',e:'',u:'강환국 1부',r:0,n:''}],
-'2026-06-04':[{t:'',g:'',p:'',e:'',u:'비욘드비즈',r:0,n:''}],
-'2026-06-05':[{t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'강환국 2부',r:0,n:''}],
-/* ★ 6월 6일(토) */
-'2026-06-06':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
-/* ★ 6월 7일(일) */
-'2026-06-07':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
-'2026-06-08':[{t:'14:00',g:'이선엽',p:'최건일',e:'김태환',u:'',r:0,n:''}],
-'2026-06-09':[{t:'10:30',g:'문홍철',p:'최건일',e:'박채빈',u:'',r:0,n:''}],
-'2026-06-10':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-11':[{t:'11:00',g:'유신익',p:'양영은',e:'',u:'비욘드비즈',r:0,n:''}],
-'2026-06-12':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'로봇AI 1부',r:0,n:''}],
-/* ★ 6월 13일(토) */
-'2026-06-13':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
-/* ★ 6월 14일(일) */
-'2026-06-14':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
-'2026-06-15':[{t:'',g:'',p:'',e:'',u:'로봇AI 2부',r:0,n:''}],
-'2026-06-16':[{t:'',g:'',p:'',e:'',u:'유신익 1부',r:0,n:'태환 예비군'}],
-'2026-06-17':[{t:'',g:'',p:'',e:'',u:'유신익 2부',r:0,n:'태환 예비군'}],
-'2026-06-18':[{t:'14:00',g:'박세익',p:'양영은',e:'박채빈',u:'',r:0,n:'태환 예비군'}],
-'2026-06-19':[{t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''}],
-/* ★ 6월 20일(토) */
-'2026-06-20':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
-/* ★ 6월 21일(일) */
-'2026-06-21':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
-'2026-06-22':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-23':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-24':[{t:'09:00',g:'오건영',p:'최건일',e:'김태환',u:'',r:0,n:''}],
-'2026-06-25':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-26':[{t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'',r:0,n:''}],
-/* ★ 6월 27일(토) */
-'2026-06-27':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
-/* ★ 6월 28일(일) */
-'2026-06-28':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
-'2026-06-29':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-06-30':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-/* 7월 */
-'2026-07-01':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-07-02':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
-'2026-07-03':[{t:'-',g:'염승환',p:'양영은',e:'',u:'',r:0,n:''}],
+/* ━━━━━━━━━━━━━━━━━━━━ PRESET ━━━━━━━━━━━━━━━━━━━━
+   독스 원본 전체 라인 1:1 대조 (2026-01-01 ~ 2026-07-03)
+   날짜에 행이 없으면 PRESET에도 없음 → 빈 슬롯 1개 반환
+   각 슬롯: { t:시간, g:출연자, p:제작자, e:편집자, u:업로드, r:리소스(0/1), n:특이사항 }
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const P = {
+  /* ─ 1월 ─ */
+  '2026-01-01':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-01-02':[{t:'',g:'염승환',p:'양영은',e:'박채빈',u:'',r:0,n:''}],
+  '2026-01-05':[{t:'',g:'',p:'',e:'',u:'페르소나AI 풀버전업로드 (17:00)',r:0,n:''}],
+  '2026-01-06':[{t:'10:30',g:'한상춘',p:'최건일',e:'김태환',u:'',r:1,n:''}],
+  '2026-01-07':[{t:'',g:'',p:'',e:'',u:'한상춘 위원',r:0,n:'김태환 외주 / 양영은 CES'}],
+  '2026-01-08':[{t:'13:00',g:'어린이 동물티비\n예띠스튜디오 사용',p:'',e:'',u:'',r:0,n:'김태환 외주 / 양영은 CES'}],
+  '2026-01-09':[{t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'김경민교수 2부 업로드 (7:00)',r:1,n:'양영은 CES'}],
+  '2026-01-12':[{t:'',g:'',p:'',e:'',u:'코자아 풀버전 업로드(17:00)',r:0,n:'양영은 휴가'}],
+  '2026-01-13':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'양영은 휴가'}],
+  '2026-01-14':[{t:'09:00',g:'오건영',p:'최건일',e:'김태환',u:'월간오건영 1부',r:1,n:'양영은 휴가'}],
+  '2026-01-15':[{t:'',g:'',p:'',e:'',u:'월간오건영 2부',r:0,n:'양영은 휴가'}],
+  '2026-01-16':[
+    {t:'10:50',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''},
+    {t:'14:00',g:'북터뷰(정주용 의장)',p:'양영은',e:'박채빈',u:'',r:0,n:''}
+  ],
+  '2026-01-17':[{t:'',g:'',p:'',e:'',u:'염블리 1부 (9:00)',r:0,n:''}],
+  '2026-01-18':[{t:'',g:'',p:'',e:'',u:'염블리 2부 (9:00) / 정주용 북터뷰 1부 업로드',r:0,n:''}],
+  '2026-01-19':[{t:'',g:'',p:'',e:'',u:'정주용 북터뷰 2부 업로드 / 코자아 쇼츠1 (7:00)',r:0,n:''}],
+  '2026-01-20':[{t:'',g:'',p:'',e:'',u:'정주용 북터뷰 풀버전 업로드 / 코자아 쇼츠2 (7:00)',r:0,n:''}],
+  '2026-01-21':[
+    {t:'09:00',g:'장동선 CES 결산',p:'양영은',e:'김태환',u:'코자아 쇼츠3 (7:00)',r:1,n:''},
+    {t:'14:00',g:'윤지해 랩장',p:'최건일',e:'박채빈',u:'',r:0,n:''}
+  ],
+  '2026-01-22':[{t:'',g:'',p:'',e:'',u:'코자아 쇼츠4 (7:00) / 윤지해 랩장 1부 업로드',r:0,n:''}],
+  '2026-01-23':[
+    {t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'코자아 쇼츠5 (7:00) / 윤지해 랩장 2부 업로드',r:1,n:''},
+    {t:'14:00',g:'북터뷰(홍진채)',p:'양영은',e:'박채빈',u:'',r:0,n:''}
+  ],
+  '2026-01-26':[{t:'',g:'',p:'',e:'',u:'피터앤김 풀버전 업로드(17:00)',r:0,n:''}],
+  '2026-01-27':[{t:'',g:'중소기업중앙회 녹화',p:'양영은',e:'외주 제작',u:'',r:0,n:''}],
+  '2026-01-28':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-01-29':[{t:'14:00',g:'북터뷰 / 세빛희 작가',p:'양영은',e:'',u:'',r:0,n:'최건일 휴가'}],
+  '2026-01-30':[{t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:'최건일 휴가'}],
+
+  /* ─ 2월 ─ */
+  '2026-02-02':[{t:'',g:'',p:'',e:'',u:'홍진채 북터뷰 1부 업로드(7:00)',r:0,n:'최건일 휴가'}],
+  '2026-02-03':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'최건일 휴가'}],
+  '2026-02-04':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'양영은 휴가'}],
+  '2026-02-05':[{t:'10:30',g:'문홍철',p:'최건일',e:'박채빈',u:'오종관 대표 1부 업로드(17:00) / 새빛희 북터뷰 1부 업로드',r:1,n:'양영은 휴가 / *12:30-15:00 어린이 동물티비 예띠스튜디오'}],
+  '2026-02-06':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'',r:1,n:'양영은 휴가'}],
+  '2026-02-09':[{t:'',g:'',p:'',e:'',u:'홍진채 북터뷰 2부 업로드(7:00)',r:0,n:''}],
+  '2026-02-10':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'하나래 연기'}],
+  '2026-02-11':[{t:'10:30',g:'이경준 본부장(로봇)',p:'최건일',e:'김태환',u:'',r:1,n:'채빈 휴무'}],
+  '2026-02-12':[{t:'',g:'',p:'',e:'',u:'오종관 대표 2부 업로드(17:00) / 새빛희 북터뷰 2부 업로드',r:0,n:'채빈 휴무'}],
+  '2026-02-13':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'',r:1,n:'채빈 휴무'}],
+  '2026-02-16':[{t:'',g:'',p:'',e:'',u:'홍진채 북터뷰 풀버전 업로드(7:00)',r:0,n:'설날 연휴'}],
+  '2026-02-17':[{t:'',g:'',p:'',e:'',u:'이경준(로봇1)',r:0,n:'설날'}],
+  '2026-02-18':[{t:'',g:'',p:'',e:'',u:'이경준(로봇2)',r:0,n:'설날 연휴'}],
+  '2026-02-19':[{t:'11:00',g:'정주호',p:'양영은',e:'박채빈',u:'오종관 대표 풀버전 업로드(17:00) / 새빛희 북터뷰 풀버전 업로드',r:0,n:'태환 휴무'}],
+  '2026-02-20':[{t:'11:00',g:'염승환',p:'최건일',e:'박채빈',u:'',r:1,n:'태환 휴무'}],
+  '2026-02-23':[{t:'15:00',g:'고경남',p:'양영은',e:'김태환',u:'이노크라스 쇼츠1 업로드 / 노란우산 미드폼 업로드',r:0,n:''}],
+  '2026-02-24':[{t:'',g:'',p:'',e:'',u:'이노크라스 쇼츠2 업로드 / 고경남 세무사 업로드',r:0,n:''}],
+  '2026-02-25':[{t:'',g:'',p:'',e:'',u:'이노크라스 쇼츠3 업로드',r:0,n:''}],
+  '2026-02-26':[{t:'',g:'',p:'',e:'',u:'이노크라스 쇼츠4 업로드',r:0,n:''}],
+  '2026-02-27':[{t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'이노크라스 쇼츠5 업로드',r:0,n:''}],
+
+  /* ─ 3월 ─ */
+  '2026-03-02':[{t:'',g:'',p:'',e:'',u:'07:00 정주호 대표 2부 업로드',r:0,n:''}],
+  '2026-03-03':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'태환 휴가'}],
+  '2026-03-04':[{t:'15:30',g:'유신익 박사',p:'양영은',e:'박채빈',u:'목요일 오전 업로드',r:0,n:'태환 휴가'}],
+  '2026-03-05':[{t:'10:30',g:'하나래 팀장',p:'최건일',e:'박채빈',u:'하나래 1부',r:1,n:'태환 휴가'}],
+  '2026-03-06':[{t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'하나래 2부',r:1,n:'태환 휴가'}],
+  '2026-03-09':[{t:'',g:'',p:'',e:'',u:'',r:0,n:'태환 휴가 / 오후 어린이동물티비 예띠스튜디오'}],
+  '2026-03-10':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-03-11':[{t:'11:00',g:'하창완 본부장',p:'양영은',e:'김태환',u:'11일 오후 1부 / 12일 2부 업로드',r:0,n:''}],
+  '2026-03-12':[{t:'16:00',g:'강환국 북터뷰',p:'양영은',e:'박채빈',u:'',r:0,n:'14일 오후 업로드'}],
+  '2026-03-13':[
+    {t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''},
+    {t:'13:00',g:'성상현',p:'최건일',e:'박채빈',u:'',r:1,n:''}
+  ],
+  '2026-03-16':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-03-17':[{t:'',g:'',p:'',e:'',u:'성상현 1부',r:0,n:''}],
+  '2026-03-18':[{t:'',g:'',p:'',e:'',u:'성상현 2부',r:0,n:''}],
+  '2026-03-19':[{t:'15:00',g:'북터뷰',p:'양영은',e:'김태환',u:'',r:0,n:''}],
+  '2026-03-20':[
+    {t:'09:00',g:'오건영',p:'최건일',e:'박채빈',u:'',r:1,n:''},
+    {t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''}
+  ],
+  '2026-03-23':[{t:'14:00',g:'이현지(하이브)',p:'최건일',e:'박채빈',u:'오건영 1부 / 이현지',r:1,n:''}],
+  '2026-03-24':[{t:'10:30',g:'문홍철',p:'최건일',e:'김태환',u:'오건영 2부 / (오후)북터뷰 1부',r:1,n:''}],
+  '2026-03-25':[{t:'',g:'',p:'',e:'',u:'문홍철 1부',r:0,n:''}],
+  '2026-03-26':[{t:'',g:'비욘드비즈',p:'양영은',e:'외주',u:'문홍철 2부',r:0,n:''}],
+  '2026-03-27':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'북터뷰 2부',r:1,n:''}],
+  '2026-03-30':[{t:'15:00',g:'김영익',p:'양영은',e:'박채빈',u:'',r:0,n:''}],
+  '2026-03-31':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+
+  /* ─ 4월 ─ */
+  '2026-04-01':[{t:'',g:'',p:'',e:'',u:'김영익 교수 1부',r:0,n:''}],
+  '2026-04-02':[{t:'',g:'',p:'',e:'',u:'김영익 교수 2부',r:0,n:''}],
+  '2026-04-03':[{t:'14:00',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:'예띠스튜디오 어린이동물티비(10:30-13:00)'}],
+  '2026-04-06':[{t:'16:00',g:'김민석 전 국방부 대변인',p:'양영은',e:'김태환',u:'북터뷰 3부',r:0,n:''}],
+  '2026-04-07':[
+    {t:'09:00',g:'성상현',p:'최건일',e:'박채빈',u:'',r:1,n:''},
+    {t:'14:00',g:'보험협회',p:'최건일',e:'박채빈',u:'',r:0,n:''}
+  ],
+  '2026-04-08':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-04-09':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-04-10':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'보험협회 1부 / 북터뷰 풀버전',r:1,n:''}],
+  '2026-04-13':[{t:'',g:'',p:'',e:'',u:'보험협회 2부 / 성상현 1부',r:0,n:''}],
+  '2026-04-14':[{t:'14:00',g:'이현지(엔터)',p:'최건일',e:'박채빈',u:'성상현 2부',r:1,n:''}],
+  '2026-04-15':[{t:'',g:'',p:'',e:'',u:'이현지 1부',r:0,n:''}],
+  '2026-04-16':[{t:'',g:'',p:'',e:'',u:'이현지 2부',r:0,n:''}],
+  '2026-04-17':[{t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'07:00 비욘드 더채움 견과 1부 / 성상현 풀버전',r:0,n:''}],
+  '2026-04-20':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-04-21':[{t:'',g:'',p:'',e:'',u:'이현지 풀버전',r:0,n:''}],
+  '2026-04-22':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-04-23':[{t:'15:00',g:'LG전자 김영재 상무(로봇&AI) &유웅환 박사',p:'양영은',e:'박채빈',u:'17:00 비욘드 더채움견과 2부',r:0,n:''}],
+  '2026-04-24':[
+    {t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''},
+    {t:'이어서',g:'염승환',p:'양영은',e:'박채빈',u:'',r:0,n:''}
+  ],
+  '2026-04-27':[{t:'11:00',g:'김창익',p:'양영은',e:'김태환',u:'7시 염승환 주주환원',r:0,n:''}],
+  '2026-04-28':[{t:'',g:'',p:'',e:'',u:'김창익 1부',r:0,n:''}],
+  '2026-04-29':[{t:'',g:'',p:'',e:'',u:'김창익 2부',r:0,n:''}],
+  '2026-04-30':[{t:'10:30',g:'문홍철',p:'최건일',e:'박채빈',u:'17:00 비욘드 더채움견과 3부 / 문홍철 1부',r:1,n:'예띠스튜디오 오후 어린이 동물티비'}],
+
+  /* ─ 5월 ─ */
+  '2026-05-01':[
+    {t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'문홍철 2부',r:1,n:''},
+    {t:'13:30',g:'고경남',p:'양영은',e:'박채빈',u:'',r:0,n:'고경남 녹화 후 AI 컨펌'}
+  ],
+  '2026-05-04':[{t:'',g:'',p:'',e:'',u:'고경남 세무사 업로드',r:0,n:'영은 기자님 휴가'}],
+  '2026-05-05':[{t:'',g:'',p:'',e:'',u:'김창익 풀버전',r:0,n:''}],
+  '2026-05-06':[{t:'10:00',g:'오건영',p:'양영은',e:'김태환',u:'오건영 1부',r:0,n:''}],
+  '2026-05-07':[{t:'',g:'',p:'',e:'',u:'오건영 2부',r:0,n:''}],
+  '2026-05-08':[{t:'12:30',g:'염승환',p:'양영은',e:'김태환',u:'아침 와이즈파트너스 비욘드비즈 1부',r:0,n:''}],
+  '2026-05-11':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-05-12':[{t:'10:00',g:'유신익 박사',p:'양영은',e:'박채빈',u:'',r:0,n:''}],
+  '2026-05-13':[{t:'',g:'',p:'',e:'',u:'유신익박사 1부',r:0,n:''}],
+  '2026-05-14':[{t:'',g:'',p:'',e:'',u:'비욘드비즈 더채움 풀버전 (1,2부 합본)',r:0,n:''}],
+  '2026-05-15':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'오전 7시 유신익 박사 2부',r:1,n:''}],
+  '2026-05-16':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
+  '2026-05-17':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
+  '2026-05-18':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-05-19':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-05-20':[
+    {t:'10:30',g:'박세익',p:'최건일',e:'박채빈',u:'',r:1,n:''},
+    {t:'11:30(녹화 마치는대로)',g:'유신익',p:'양영은',e:'김태환',u:'',r:1,n:''}
+  ],
+  '2026-05-21':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-05-22':[{t:'11:00',g:'염승환',p:'양영은',e:'김태환',u:'(오전)유신익 북터뷰 1부',r:0,n:''}],
+  '2026-05-23':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토) / (오후)와이즈파트너즈 2부 비욘드비즈',r:0,n:''}],
+  '2026-05-24':[{t:'',g:'',p:'',e:'',u:'(오전)염블리 비밀노트 (일) / (17:00)유신익 북터뷰 2부',r:0,n:''}],
+  '2026-05-25':[{t:'',g:'',p:'',e:'',u:'(오후)유신익 북터뷰 풀버전',r:0,n:''}],
+  '2026-05-26':[{t:'10:00',g:'성상현',p:'최건일',e:'김태환',u:'',r:1,n:''}],
+  '2026-05-27':[{t:'',g:'',p:'',e:'',u:'성상현 1부',r:0,n:''}],
+  '2026-05-28':[{t:'14:00',g:'비욘드비즈 -디자이노블 촬영(출장)',p:'양영은',e:'외주',u:'성상현 2부 / 비욘드비즈 풀버전 와이즈파트너스',r:0,n:''}],
+  '2026-05-29':[
+    {t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'',r:1,n:'오후(13:30~16:00) 예띠스튜디오 어린이 동물티비'},
+    {t:'17:00',g:'강환국',p:'양영은',e:'박채빈',u:'',r:0,n:''}
+  ],
+  '2026-05-30':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
+  '2026-05-31':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
+
+  /* ─ 6월 ─ */
+  '2026-06-01':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-02':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-03':[{t:'',g:'',p:'',e:'',u:'강환국 1부',r:0,n:''}],
+  '2026-06-04':[{t:'',g:'',p:'',e:'',u:'비욘드비즈',r:0,n:''}],
+  '2026-06-05':[{t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'강환국 2부',r:0,n:''}],
+  '2026-06-06':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
+  '2026-06-07':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
+  '2026-06-08':[{t:'14:00',g:'이선엽',p:'최건일',e:'김태환',u:'',r:0,n:''}],
+  '2026-06-09':[{t:'10:30',g:'문홍철',p:'최건일',e:'박채빈',u:'',r:0,n:''}],
+  '2026-06-10':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-11':[{t:'11:00',g:'유신익',p:'양영은',e:'',u:'비욘드비즈',r:0,n:''}],
+  '2026-06-12':[{t:'10:30',g:'염승환',p:'최건일',e:'김태환',u:'로봇AI 1부',r:0,n:''}],
+  '2026-06-13':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
+  '2026-06-14':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
+  '2026-06-15':[{t:'',g:'',p:'',e:'',u:'로봇AI 2부',r:0,n:''}],
+  '2026-06-16':[{t:'',g:'',p:'',e:'',u:'유신익 1부',r:0,n:'태환 예비군'}],
+  '2026-06-17':[{t:'',g:'',p:'',e:'',u:'유신익 2부',r:0,n:'태환 예비군'}],
+  '2026-06-18':[{t:'14:00',g:'박세익',p:'양영은',e:'박채빈',u:'',r:0,n:'태환 예비군'}],
+  '2026-06-19':[{t:'10:30',g:'염승환',p:'양영은',e:'김태환',u:'',r:0,n:''}],
+  '2026-06-20':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
+  '2026-06-21':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
+  '2026-06-22':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-23':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-24':[{t:'09:00',g:'오건영',p:'최건일',e:'김태환',u:'',r:0,n:''}],
+  '2026-06-25':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-26':[{t:'10:30',g:'염승환',p:'최건일',e:'박채빈',u:'',r:0,n:''}],
+  '2026-06-27':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (토)',r:0,n:''}],
+  '2026-06-28':[{t:'',g:'',p:'',e:'',u:'염블리 비밀노트 (일)',r:0,n:''}],
+  '2026-06-29':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-06-30':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+
+  /* ─ 7월 ─ */
+  '2026-07-01':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-07-02':[{t:'',g:'',p:'',e:'',u:'',r:0,n:''}],
+  '2026-07-03':[{t:'-',g:'염승환',p:'양영은',e:'',u:'',r:0,n:''}],
 };
 
-/* ════ 날짜 유틸 ════ */
-const toKey=d=>d.toISOString().slice(0,10);
-const addDays=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r;};
+/* ━━━━━━━━━━━━━━━━━━━━ 날짜 유틸 ━━━━━━━━━━━━━━━━━━━━ */
+const toKey = d => d.toISOString().slice(0,10);
+const addDays = (d,n) => { const r=new Date(d); r.setDate(r.getDate()+n); return r; };
 function getMon(d){
-  const r=new Date(d);r.setHours(0,0,0,0);
-  const day=r.getDay();r.setDate(r.getDate()+(day===0?-6:1-day));return r;
+  const r=new Date(d); r.setHours(0,0,0,0);
+  const day=r.getDay(); r.setDate(r.getDate()+(day===0?-6:1-day)); return r;
 }
-const fmt=d=>`${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KO[d.getDay()]})`;
+const fmt = d => `${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KO[d.getDay()]})`;
 
-/* ════ localStorage ════ */
-const LS={
-  loadSched:()=>{try{return JSON.parse(localStorage.getItem('mh2_s'))||{};}catch{return {};}},
-  saveSched:o=>localStorage.setItem('mh2_s',JSON.stringify(o)),
-  loadMemo:()=>{try{return JSON.parse(localStorage.getItem('mh2_m'))||{};}catch{return {};}},
-  saveMemo:o=>localStorage.setItem('mh2_m',JSON.stringify(o)),
+/* ━━━━━━━━━━━━━━━━━━━━ localStorage ━━━━━━━━━━━━━━━━━━━━ */
+const LS = {
+  S: () => { try{ return JSON.parse(localStorage.getItem('mh3_s'))||{}; }catch{ return {}; } },
+  saveS: o => localStorage.setItem('mh3_s', JSON.stringify(o)),
+  M: () => { try{ return JSON.parse(localStorage.getItem('mh3_m'))||{}; }catch{ return {}; } },
+  saveM: o => localStorage.setItem('mh3_m', JSON.stringify(o)),
 };
 
-/* 슬롯 가져오기: 저장값 우선 → PRESET → 빈 1슬롯 */
+/* 슬롯 가져오기: 저장값 → PRESET → 빈1개 */
 function getSlots(key){
-  const s=LS.loadSched();
+  const s = LS.S();
   if(s[key]) return s[key];
   if(P[key])  return JSON.parse(JSON.stringify(P[key]));
   return [{t:'',g:'',p:'',e:'',u:'',r:0,n:''}];
 }
 
-/* ════ 상태 ════ */
-let WS=getMon(new Date());
+/* ━━━━━━━━━━━━━━━━━━━━ 상태 ━━━━━━━━━━━━━━━━━━━━ */
+let WS = getMon(new Date());
 
-/* ════ 옵션 생성 ════ */
-const mOpts=v=>MBR.map(m=>`<option value="${m}"${m===v?' selected':''}>${m||'—'}</option>`).join('');
+/* ━━━━━━━━━━━━━━━━━━━━ 옵션 HTML ━━━━━━━━━━━━━━━━━━━━ */
+const mOpts = v => MBR.map(m=>`<option value="${m}"${m===v?' selected':''}>${m||'—'}</option>`).join('');
 
-/* ════ 슬롯 HTML ════ */
-function slotHTML(dKey,s,sl,isLast){
-  const isSecond=s>0;
+/* ━━━━━━━━━━━━━━━━━━━━ textarea 자동 높이 ━━━━━━━━━━━━━━━━━━━━ */
+function autoH(el){
+  el.style.height='auto';
+  el.style.height=el.scrollHeight+'px';
+}
+document.addEventListener('input', e=>{
+  if(e.target.tagName==='TEXTAREA' && e.target.classList.contains('ci')) autoH(e.target);
+});
+
+/* ━━━━━━━━━━━━━━━━━━━━ 슬롯 행 HTML ━━━━━━━━━━━━━━━━━━━━ */
+function slotHTML(dKey, s, sl){
+  const is2 = s > 0;
+  const lbl = is2
+    ? `<button class="btn-del" onclick="delSlot('${dKey}',${s})" title="2차 삭제">✕</button>`
+    : `<span style="font-size:.63rem;color:var(--g5);">1차</span>`;
   return `
-<tr class="sr${isSecond?' sr2':''}" id="sr-${dKey}-${s}">
-  <td style="text-align:center;color:var(--g5);font-size:.65rem;white-space:nowrap;">
-    ${isSecond?`<button class="btn-del" onclick="delSlot('${dKey}',${s})" title="2차 삭제">✕</button>`:'1차'}
-  </td>
+<tr class="sr${is2?' sr2':''}" id="sr-${dKey}-${s}">
+  <td class="slot-lbl">${lbl}</td>
   <td><input type="time" class="ci" data-f="t" value="${sl.t||''}"></td>
-  <td><textarea class="ci" data-f="g" rows="1">${sl.g||''}</textarea></td>
+  <td><textarea class="ci" data-f="g" rows="1">${esc(sl.g||'')}</textarea></td>
   <td><select class="ci" data-f="p">${mOpts(sl.p||'')}</select></td>
   <td><select class="ci" data-f="e">${mOpts(sl.e||'')}</select></td>
-  <td><textarea class="ci" data-f="u" rows="1">${sl.u||''}</textarea></td>
+  <td><textarea class="ci" data-f="u" rows="1">${esc(sl.u||'')}</textarea></td>
   <td><div class="rchk"><input type="checkbox" data-f="r"${sl.r?' checked':''}></div></td>
-  <td><textarea class="ci" data-f="n" rows="1">${sl.n||''}</textarea></td>
-  <td></td>
+  <td><textarea class="ci" data-f="n" rows="1">${esc(sl.n||'')}</textarea></td>
 </tr>`;
 }
 
-/* ════ 렌더 ════ */
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ━━━━━━━━━━━━━━━━━━━━ 렌더 ━━━━━━━━━━━━━━━━━━━━ */
 function render(){
-  const today=new Date();today.setHours(0,0,0,0);
-  document.getElementById('weekTitle').textContent=
+  const today = new Date(); today.setHours(0,0,0,0);
+  document.getElementById('weekTitle').textContent =
     `${WS.getFullYear()}년 ${fmt(WS)} ~ ${fmt(addDays(WS,6))}`;
 
-  const wk=toKey(WS);
-  const m=LS.loadMemo()[wk]||{};
-  document.getElementById('m-yye').value=m.yye||'';
-  document.getElementById('m-cgil').value=m.cgil||'';
-  document.getElementById('m-etc').value=m.etc||'';
+  const wk = toKey(WS);
+  const m  = LS.M()[wk] || {};
+  document.getElementById('m-yye').value  = m.yye  || '';
+  document.getElementById('m-cgil').value = m.cgil || '';
+  document.getElementById('m-etc').value  = m.etc  || '';
 
-  const tb=document.getElementById('tb');
-  tb.innerHTML='';
+  const tb = document.getElementById('tb');
+  tb.innerHTML = '';
 
-  for(let i=0;i<7;i++){
-    const date=addDays(WS,i);
-    const dKey=toKey(date);
-    const dow=date.getDay();
-    const isToday=toKey(date)===toKey(today);
-    const isPast=date<today;
-    const hol=HOL[dKey];
-    const slots=getSlots(dKey);
+  for(let i=0; i<7; i++){
+    const date  = addDays(WS, i);
+    const dKey  = toKey(date);
+    const dow   = date.getDay();
+    const isToday = toKey(date) === toKey(today);
+    const isPast  = date < today;
+    const hol   = HOL[dKey];
+    const slots = getSlots(dKey);
+    const has2  = slots.length >= 2;
 
-    // 날짜 헤더
-    let hc='dh';
-    if(isToday)hc+=' is-today';
-    if(dow===6)hc+=' is-sat';
-    if(dow===0)hc+=' is-sun';
+    // 날짜 헤더 클래스
+    let hc = 'dh';
+    if(isToday) hc += ' is-today';
+    if(dow===6) hc += ' is-sat';
+    if(dow===0) hc += ' is-sun';
 
-    let badges=`<span class="dt"${isPast&&!isToday?' style="opacity:.5"':''}>${fmt(date)}</span>`;
-    if(isToday)badges+=` <span class="bgt bgt-today">오늘</span>`;
-    if(hol)    badges+=` <span class="bgt bgt-hol">${hol}</span>`;
+    let badges = `<span class="dt"${isPast&&!isToday?' style="opacity:.5"':''}>${fmt(date)}</span>`;
+    if(isToday) badges += ` <span class="bgt bgt-today">오늘</span>`;
+    if(hol)     badges += ` <span class="bgt bgt-hol">${hol}</span>`;
+    // 2차 녹화 버튼 — 날짜 헤더 안에 배치
+    badges += ` <button class="btn-add2${has2?' hidden':''}" id="addbtn-${dKey}" onclick="addSlot('${dKey}')">＋ 2차 녹화</button>`;
 
-    tb.insertAdjacentHTML('beforeend',`
+    tb.insertAdjacentHTML('beforeend', `
       <tr class="${hc}" id="dh-${dKey}">
-        <td colspan="9">
-          <div class="dbrow">${badges}</div>
-        </td>
+        <td colspan="8"><div class="dbrow">${badges}</div></td>
       </tr>`);
 
-    // 슬롯 행들
-    slots.forEach((sl,s)=>{
-      tb.insertAdjacentHTML('beforeend', slotHTML(dKey,s,sl,s===slots.length-1));
+    // 슬롯 행
+    slots.forEach((sl,s) => {
+      tb.insertAdjacentHTML('beforeend', slotHTML(dKey, s, sl));
     });
 
-    // + 버튼 행 (2차 없을 때만 표시)
-    tb.insertAdjacentHTML('beforeend',`
-      <tr class="sr-foot" id="foot-${dKey}">
-        <td colspan="9">
+    // 저장/초기화 행
+    tb.insertAdjacentHTML('beforeend', `
+      <tr class="sf" id="sf-${dKey}">
+        <td colspan="8">
           <button class="btn-clr" onclick="clearDay('${dKey}')">초기화</button>
-          <button class="btn-add" id="addbtn-${dKey}" onclick="addSlot('${dKey}')"
-            style="${slots.length>=2?'display:none':''}">＋ 2차 녹화 추가</button>
           <button class="btn-save" onclick="saveDay('${dKey}')">저장 ✓</button>
         </td>
       </tr>`);
   }
+
+  // textarea 초기 높이 적용
+  document.querySelectorAll('textarea.ci').forEach(autoH);
 }
 
-/* ════ 슬롯 추가 ════ */
+/* ━━━━━━━━━━━━━━━━━━━━ 2차 슬롯 추가 / 삭제 ━━━━━━━━━━━━━━━━━━━━ */
 function addSlot(dKey){
-  // 현재 저장된(또는 PRESET) 슬롯 읽기
-  const slots=collectSlots(dKey);
-  if(slots.length>=2) return;
-  const newSl={t:'',g:'',p:'',e:'',u:'',r:0,n:''};
-  // 풋 행 앞에 새 행 삽입
-  const foot=document.getElementById(`foot-${dKey}`);
-  const tmp=document.createElement('tbody');
-  tmp.innerHTML=slotHTML(dKey,1,newSl,true);
-  foot.parentNode.insertBefore(tmp.firstElementChild,foot);
-  // + 버튼 숨김
-  document.getElementById(`addbtn-${dKey}`).style.display='none';
+  const sfRow = document.getElementById(`sf-${dKey}`);
+  const tmp   = document.createElement('tbody');
+  tmp.innerHTML = slotHTML(dKey, 1, {t:'',g:'',p:'',e:'',u:'',r:0,n:''});
+  sfRow.parentNode.insertBefore(tmp.firstElementChild, sfRow);
+  document.getElementById(`addbtn-${dKey}`).classList.add('hidden');
+  // 새 textarea 높이
+  const newRow = document.getElementById(`sr-${dKey}-1`);
+  if(newRow) newRow.querySelectorAll('textarea.ci').forEach(autoH);
 }
 
-/* ════ 슬롯 삭제 ════ */
-function delSlot(dKey,s){
-  const row=document.getElementById(`sr-${dKey}-${s}`);
+function delSlot(dKey, s){
+  const row = document.getElementById(`sr-${dKey}-${s}`);
   if(row) row.remove();
-  const addbtn=document.getElementById(`addbtn-${dKey}`);
-  if(addbtn) addbtn.style.display='';
+  const btn = document.getElementById(`addbtn-${dKey}`);
+  if(btn) btn.classList.remove('hidden');
 }
 
-/* ════ 슬롯 수집 ════ */
+/* ━━━━━━━━━━━━━━━━━━━━ 수집 ━━━━━━━━━━━━━━━━━━━━ */
 function collectSlots(dKey){
-  const slots=[];
-  let s=0;
+  const slots = []; let s = 0;
   while(document.getElementById(`sr-${dKey}-${s}`)){
-    const row=document.getElementById(`sr-${dKey}-${s}`);
-    const gv=f=>{
-      const el=row.querySelector(`[data-f="${f}"]`);
+    const row = document.getElementById(`sr-${dKey}-${s}`);
+    const gv = f => {
+      const el = row.querySelector(`[data-f="${f}"]`);
       if(!el) return f==='r'?0:'';
-      return f==='r'?(el.checked?1:0):el.value;
+      return f==='r' ? (el.checked?1:0) : el.value;
     };
     slots.push({t:gv('t'),g:gv('g'),p:gv('p'),e:gv('e'),u:gv('u'),r:gv('r'),n:gv('n')});
     s++;
@@ -558,58 +559,50 @@ function collectSlots(dKey){
   return slots;
 }
 
-/* ════ 저장 ════ */
+/* ━━━━━━━━━━━━━━━━━━━━ 저장 / 초기화 ━━━━━━━━━━━━━━━━━━━━ */
 function saveDay(dKey){
-  const all=LS.loadSched();
-  all[dKey]=collectSlots(dKey);
-  LS.saveSched(all);
-  const hdr=document.getElementById(`dh-${dKey}`);
-  if(hdr){hdr.classList.remove('pulsed');void hdr.offsetWidth;hdr.classList.add('pulsed');
-          setTimeout(()=>hdr.classList.remove('pulsed'),600);}
-  toast('✅ 저장되었습니다.');
-  updSaved();
+  const all = LS.S();
+  all[dKey] = collectSlots(dKey);
+  LS.saveS(all);
+  const hdr = document.getElementById(`dh-${dKey}`);
+  if(hdr){ hdr.classList.remove('pulsed'); void hdr.offsetWidth; hdr.classList.add('pulsed');
+           setTimeout(()=>hdr.classList.remove('pulsed'), 550); }
+  toast('✅ 저장되었습니다.'); updSaved();
 }
 
 function clearDay(dKey){
   if(!confirm('이 날의 데이터를 초기화할까요?\n(DOCS 원본으로 복원됩니다)')) return;
-  const all=LS.loadSched();
-  delete all[dKey];
-  LS.saveSched(all);
-  render();
-  toast('🗑 초기화 완료 (원본 복원)');
+  const all = LS.S(); delete all[dKey]; LS.saveS(all);
+  render(); toast('🗑 초기화 완료 (원본 복원)');
 }
 
 function saveMemo(){
-  const wk=toKey(WS);
-  const all=LS.loadMemo();
-  all[wk]={yye:document.getElementById('m-yye').value,
-           cgil:document.getElementById('m-cgil').value,
-           etc:document.getElementById('m-etc').value};
-  LS.saveMemo(all);
-  toast('✅ 메모 저장 완료');
-  updSaved();
+  const wk = toKey(WS); const all = LS.M();
+  all[wk] = { yye:  document.getElementById('m-yye').value,
+              cgil: document.getElementById('m-cgil').value,
+              etc:  document.getElementById('m-etc').value };
+  LS.saveM(all); toast('✅ 메모 저장 완료'); updSaved();
 }
 
-/* ════ 주간 이동 ════ */
-function changeWeek(d){WS=addDays(WS,d*7);render();scrollTo({top:0,behavior:'smooth'});}
-function goToday(){WS=getMon(new Date());render();scrollTo({top:0,behavior:'smooth'});}
+/* ━━━━━━━━━━━━━━━━━━━━ 주간 이동 ━━━━━━━━━━━━━━━━━━━━ */
+function changeWeek(d){ WS=addDays(WS,d*7); render(); scrollTo({top:0,behavior:'smooth'}); }
+function goToday(){ WS=getMon(new Date()); render(); scrollTo({top:0,behavior:'smooth'}); }
 
-/* ════ Ctrl+S ════ */
-document.addEventListener('keydown',e=>{
+/* ━━━━━━━━━━━━━━━━━━━━ Ctrl+S ━━━━━━━━━━━━━━━━━━━━ */
+document.addEventListener('keydown', e=>{
   if((e.ctrlKey||e.metaKey)&&e.key==='s'){
     e.preventDefault();
     for(let i=0;i<7;i++) saveDay(toKey(addDays(WS,i)));
-    saveMemo();
-    toast('✅ 이번 주 전체 저장 완료 (Ctrl+S)');
+    saveMemo(); toast('✅ 이번 주 전체 저장 (Ctrl+S)');
   }
 });
 
-/* ════ 토스트 ════ */
+/* ━━━━━━━━━━━━━━━━━━━━ 토스트 / 마지막저장 ━━━━━━━━━━━━━━━━━━━━ */
 let _t;
 function toast(msg){
   const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  clearTimeout(_t);_t=setTimeout(()=>el.classList.remove('show'),2000);
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(_t); _t=setTimeout(()=>el.classList.remove('show'),2000);
 }
 function updSaved(){
   const n=new Date();
