@@ -17,7 +17,6 @@
 html{overflow-x:auto;}
 body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:13px;color:#111;background:var(--gray-100);min-width:980px;}
 
-/* STICKY TOP */
 #stickyTop{position:sticky;top:0;z-index:500;box-shadow:0 2px 6px rgba(0,0,0,.18);}
 header{background:var(--primary);color:#fff;padding:0 18px;height:50px;display:flex;align-items:center;justify-content:space-between;}
 header h1{font-size:16px;font-weight:700;}
@@ -30,9 +29,7 @@ header h1{font-size:16px;font-weight:700;}
 #weekTitle{font-size:14px;font-weight:700;min-width:190px;text-align:center;}
 .nav-right{margin-left:auto;display:flex;gap:6px;}
 
-/* TABLE - overflow는 html 레벨에서 처리해야 thead sticky 정상 작동 */
 table{width:100%;border-collapse:collapse;min-width:960px;background:#fff;table-layout:fixed;}
-
 col.c-date  {width:100px;}
 col.c-slot  {width:126px;}
 col.c-guest {width:207px;}
@@ -43,7 +40,6 @@ col.c-res   {width:38px;}
 col.c-note  {width:132px;}
 col.c-act   {width:28px;}
 
-/* thead sticky: top = header(50px) + week-nav(42px) = 92px */
 thead{position:sticky;top:92px;z-index:400;}
 thead th{
   background:var(--primary);color:#fff;
@@ -53,10 +49,8 @@ thead th{
 }
 
 tbody tr{border-bottom:1px solid var(--gray-200);}
-/* 월(1)·수(3)·금(5)·일(0) 연한 파란빛 배경 */
 tbody tr.alt-row td{background:var(--row-alt);}
 tbody tr:hover td{background:#dbeafe!important;}
-
 td{padding:3px 4px;vertical-align:middle;border-right:1px solid var(--gray-200);overflow:hidden;}
 td.td-date{font-size:12px;font-weight:700;color:var(--primary);white-space:nowrap;vertical-align:top;padding-top:6px;}
 .today-row td.td-date{color:#dc2626;}
@@ -76,8 +70,6 @@ table input[type=text],table textarea,table select{
 table input[type=text]:focus,table textarea:focus,table select:focus{outline:none;border-color:var(--primary);}
 table textarea{resize:none;overflow:hidden;min-height:24px;}
 table select{cursor:pointer;}
-
-/* alt-row 안의 input/select/textarea 배경도 맞춤 */
 tr.alt-row td input[type=text],
 tr.alt-row td textarea,
 tr.alt-row td select{background:var(--row-alt);}
@@ -86,7 +78,6 @@ tr.alt-row td select{background:var(--row-alt);}
 .res-cell input[type=checkbox]{width:15px;height:15px;cursor:pointer;}
 .btn-del{background:#ef4444;color:#fff;border:none;border-radius:3px;padding:2px 5px;font-size:10px;cursor:pointer;}
 
-/* MEMO */
 .memo-wrap{background:#fff;padding:14px 18px;margin-top:2px;border-top:2px solid var(--primary);}
 .memo-wrap h3{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;}
 .memo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px;}
@@ -98,12 +89,25 @@ tr.alt-row td select{background:var(--row-alt);}
 .btn-save:hover{opacity:.85;}
 .btn-clear{background:#e5e7eb;color:#374151;border:none;border-radius:var(--radius);padding:6px 16px;font-size:12px;cursor:pointer;}
 
-/* TOAST */
+/* 로딩 오버레이 */
+#loadingOverlay{
+  position:fixed;inset:0;background:rgba(255,255,255,.85);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9998;font-size:15px;color:var(--primary);font-weight:700;gap:12px;
+}
+.spinner{width:36px;height:36px;border:4px solid var(--gray-200);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:8px 20px;border-radius:20px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:9999;}
 #toast.show{opacity:1;}
 </style>
 </head>
 <body>
+
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <span>데이터 불러오는 중...</span>
+</div>
 
 <div id="stickyTop">
   <header>
@@ -123,27 +127,15 @@ tr.alt-row td select{background:var(--row-alt);}
 
 <table id="scheduleTable">
   <colgroup>
-    <col class="c-date">
-    <col class="c-slot">
-    <col class="c-guest">
-    <col class="c-prod">
-    <col class="c-edit">
-    <col class="c-upload">
-    <col class="c-res">
-    <col class="c-note">
-    <col class="c-act">
+    <col class="c-date"><col class="c-slot"><col class="c-guest">
+    <col class="c-prod"><col class="c-edit"><col class="c-upload">
+    <col class="c-res"><col class="c-note"><col class="c-act">
   </colgroup>
   <thead>
     <tr>
-      <th>촬영일</th>
-      <th>녹화시간</th>
-      <th>출연자</th>
-      <th>제작자</th>
-      <th>편집자</th>
-      <th>업로드 아이템</th>
-      <th>리소스</th>
-      <th>특이사항</th>
-      <th></th>
+      <th>촬영일</th><th>녹화시간</th><th>출연자</th>
+      <th>제작자</th><th>편집자</th><th>업로드 아이템</th>
+      <th>리소스</th><th>특이사항</th><th></th>
     </tr>
   </thead>
   <tbody id="tableBody"></tbody>
@@ -174,12 +166,21 @@ tr.alt-row td select{background:var(--row-alt);}
 <div id="toast"></div>
 
 <script>
-/* ── 팀원 목록 ── */
+/* ================================================
+   Apps Script 웹앱 URL
+================================================ */
+const API = 'https://script.google.com/macros/s/AKfycbyczWT77wQ1GcpPnTrwUybyau8zDjuKAZMw0XUC3Cm8CRKDSlJHgQW4pDGycbguQCjk/exec';
+
+/* ================================================
+   팀원 목록
+================================================ */
 const PRODUCERS = ['','양영은','최건일'];
 const EDITORS   = ['','박채빈','김태환','외주'];
-const TIMES     = ['','09:00','10:00','10:30','11:00','11:30','12:30','13:00','14:00','15:00','15:30','16:00','17:00','이어서','-'];
+const TIMES     = ['','09:00','10:00','10:30','11:00','11:30','12:30','13:00','13:30','14:00','15:00','15:30','16:00','17:00','이어서','-'];
 
-/* ── PRESET ── */
+/* ================================================
+   PRESET 데이터 (DOCS 원본)
+================================================ */
 const P = {
   '2026-01-01':[{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}],
   '2026-01-02':[{slot:'',guest:'염승환',prod:'양영은',edit:'박채빈',upload:'',res:false,note:''}],
@@ -331,7 +332,50 @@ const P = {
   '2026-07-03':[{slot:'-',guest:'염승환',prod:'양영은',edit:'',upload:'',res:false,note:''}],
 };
 
-/* ── UTILS ── */
+/* ================================================
+   클라우드 저장소 (Google Sheets via Apps Script)
+================================================ */
+let cloudSched = {};
+let cloudMemos = {};
+
+async function fetchCloud(){
+  try{
+    const [sr, mr] = await Promise.all([
+      fetch(API+'?type=sched').then(r=>r.json()),
+      fetch(API+'?type=memo').then(r=>r.json())
+    ]);
+    cloudSched = sr||{};
+    cloudMemos = mr||{};
+  }catch(e){
+    console.warn('Cloud fetch 실패, PRESET 사용');
+    cloudSched={};
+    cloudMemos={};
+  }
+}
+
+async function saveSchedCloud(o){
+  cloudSched=o;
+  try{
+    await fetch(API,{
+      method:'POST',
+      body:JSON.stringify({type:'sched',data:o})
+    });
+  }catch(e){console.warn('저장 실패',e);}
+}
+
+async function saveMemoCloud(o){
+  cloudMemos=o;
+  try{
+    await fetch(API,{
+      method:'POST',
+      body:JSON.stringify({type:'memo',data:o})
+    });
+  }catch(e){console.warn('메모 저장 실패',e);}
+}
+
+/* ================================================
+   UTILS
+================================================ */
 function toKey(d){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
@@ -351,24 +395,21 @@ function fmt(d){return `${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KO[d.getDa
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function autoH(ta){if(!ta)return;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px';}
 
-/* ── STORAGE ── */
-function loadSched(){try{return JSON.parse(localStorage.getItem('mh_sched4'))||{};}catch{return {};}}
-function saveSched(o){localStorage.setItem('mh_sched4',JSON.stringify(o));}
-function loadMemos(){try{return JSON.parse(localStorage.getItem('mh_memos4'))||{};}catch{return {};}}
-function saveMemoStore(o){localStorage.setItem('mh_memos4',JSON.stringify(o));}
-
-/* ── STATE ── */
+/* ================================================
+   STATE
+================================================ */
 let weekStart=getMon(new Date());
 const todayKey=toKey(new Date());
 
 function getSlots(key){
-  const saved=loadSched();
-  if(saved[key]) return JSON.parse(JSON.stringify(saved[key]));
-  if(P[key])     return JSON.parse(JSON.stringify(P[key]));
+  if(cloudSched[key]) return JSON.parse(JSON.stringify(cloudSched[key]));
+  if(P[key])          return JSON.parse(JSON.stringify(P[key]));
   return [{slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''}];
 }
 
-/* ── SELECT OPTIONS ── */
+/* ================================================
+   SELECT OPTIONS
+================================================ */
 function timeOptions(val){
   return TIMES.map(t=>`<option value="${esc(t)}" ${t===val?'selected':''}>${t||'-- 시간 --'}</option>`).join('');
 }
@@ -379,10 +420,11 @@ function editOptions(val){
   return EDITORS.map(e=>`<option value="${esc(e)}" ${e===val?'selected':''}>${e||'-- 편집자 --'}</option>`).join('');
 }
 
-/* ── ROW HTML ── */
+/* ================================================
+   ROW HTML
+================================================ */
 function slotRowHTML(key,idx,s,isFirst,dateLabel,dow){
   const isToday=(key===todayKey);
-  // 월(1)·수(3)·금(5)·일(0) → alt-row
   const isAlt=(dow===1||dow===3||dow===5||dow===0);
   let rowCls=isAlt?'alt-row':'';
   if(isToday) rowCls+=' today-row';
@@ -411,7 +453,9 @@ function slotRowHTML(key,idx,s,isFirst,dateLabel,dow){
   </tr>`;
 }
 
-/* ── RENDER ── */
+/* ================================================
+   RENDER
+================================================ */
 function render(){
   const tb=document.getElementById('tableBody');
   const ws=weekStart;
@@ -431,90 +475,129 @@ function render(){
   }
   tb.innerHTML=html;
   tb.querySelectorAll('textarea').forEach(ta=>autoH(ta));
-  loadMemoUI();
 
-  /* thead top 값을 stickyTop 실제 높이로 동적 설정 */
+  /* thead top 동적 설정 */
   const stickyH=document.getElementById('stickyTop').offsetHeight;
   document.querySelector('thead').style.top=stickyH+'px';
+
+  loadMemoUI();
 }
 
-/* ── ADD / DEL SLOT ── */
+/* ================================================
+   ADD / DEL SLOT
+================================================ */
 function addSlot(key){
   const slots=getSlots(key);
   if(slots.length>=2){toast('2차 녹화까지만 추가 가능합니다');return;}
   slots.push({slot:'',guest:'',prod:'',edit:'',upload:'',res:false,note:''});
-  const saved=loadSched();saved[key]=slots;saveSched(saved);render();
+  cloudSched[key]=slots;
+  render();
 }
 function delSlot(key,idx){
   const slots=getSlots(key);
   if(slots.length<=1)return;
   slots.splice(idx,1);
-  const saved=loadSched();saved[key]=slots;saveSched(saved);render();
+  cloudSched[key]=slots;
+  render();
 }
 
-/* ── SAVE ── */
+/* ================================================
+   COLLECT & SAVE
+================================================ */
 function collectDay(key){
   const rows=document.querySelectorAll(`tr[data-key="${key}"]`);
   const slots=[];
   rows.forEach(tr=>{
     slots.push({
-      slot: tr.querySelector('.f-slot').value,
-      guest:tr.querySelector('.f-guest').value,
-      prod: tr.querySelector('.f-prod').value,
-      edit: tr.querySelector('.f-edit').value,
+      slot:  tr.querySelector('.f-slot').value,
+      guest: tr.querySelector('.f-guest').value,
+      prod:  tr.querySelector('.f-prod').value,
+      edit:  tr.querySelector('.f-edit').value,
       upload:tr.querySelector('.f-upload').value,
-      res:  tr.querySelector('.f-res').checked,
-      note: tr.querySelector('.f-note').value,
+      res:   tr.querySelector('.f-res').checked,
+      note:  tr.querySelector('.f-note').value,
     });
   });
   return slots;
 }
-function saveAll(){
-  const saved=loadSched();
+
+async function saveAll(){
+  const btn=document.querySelector('.btn-save-top');
+  btn.textContent='저장 중...';
+  btn.disabled=true;
   for(let i=0;i<7;i++){
     const key=toKey(addDays(weekStart,i));
-    saved[key]=collectDay(key);
+    cloudSched[key]=collectDay(key);
   }
-  saveSched(saved);saveMemo();
+  await saveSchedCloud(cloudSched);
+  await saveMemoFromUI();
   const ts=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('lastSaved').textContent='저장: '+ts;
+  btn.textContent='💾 저장 (Ctrl+S)';
+  btn.disabled=false;
   toast('💾 저장되었습니다');
 }
-function clearWeekData(){
+
+async function clearWeekData(){
   if(!confirm('이번 주 데이터를 원본으로 초기화할까요?'))return;
-  const saved=loadSched();
-  for(let i=0;i<7;i++) delete saved[toKey(addDays(weekStart,i))];
-  saveSched(saved);render();toast('초기화되었습니다');
+  for(let i=0;i<7;i++) delete cloudSched[toKey(addDays(weekStart,i))];
+  await saveSchedCloud(cloudSched);
+  render();
+  toast('초기화되었습니다');
 }
 
-/* ── MEMO ── */
+/* ================================================
+   MEMO
+================================================ */
 function loadMemoUI(){
   const wk=toKey(weekStart);
-  const m=loadMemos();const d=m[wk]||{};
+  const d=cloudMemos[wk]||{};
   document.getElementById('memo-yye').value=d.yye||'';
   document.getElementById('memo-cgil').value=d.cgil||'';
   document.getElementById('memo-etc').value=d.etc||'';
 }
-function saveMemo(){
+
+async function saveMemoFromUI(){
   const wk=toKey(weekStart);
-  const m=loadMemos();
-  m[wk]={yye:document.getElementById('memo-yye').value,cgil:document.getElementById('memo-cgil').value,etc:document.getElementById('memo-etc').value};
-  saveMemoStore(m);toast('메모 저장됨');
+  cloudMemos[wk]={
+    yye: document.getElementById('memo-yye').value,
+    cgil:document.getElementById('memo-cgil').value,
+    etc: document.getElementById('memo-etc').value,
+  };
+  await saveMemoCloud(cloudMemos);
 }
 
-/* ── NAV ── */
+async function saveMemo(){
+  await saveMemoFromUI();
+  toast('메모 저장됨');
+}
+
+/* ================================================
+   NAV
+================================================ */
 function changeWeek(dir){weekStart=addDays(weekStart,dir*7);render();}
 function goToday(){weekStart=getMon(new Date());render();}
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveAll();}});
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveAll();}
+});
 
-/* ── TOAST ── */
+/* ================================================
+   TOAST
+================================================ */
 function toast(msg){
   const el=document.getElementById('toast');
   el.textContent=msg;el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'),2200);
 }
 
-render();
+/* ================================================
+   INIT - 클라우드에서 데이터 불러온 후 렌더링
+================================================ */
+(async()=>{
+  await fetchCloud();
+  document.getElementById('loadingOverlay').style.display='none';
+  render();
+})();
 </script>
 </body>
 </html>
