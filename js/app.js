@@ -97,7 +97,7 @@ document.addEventListener('keydown', e=>{
   if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); saveAll(); }
 });
 
-// 초기 실행 — loadingOverlay는 반드시 숨김 처리
+// 초기 실행
 (async ()=>{
   try{
     await fetchCloud();
