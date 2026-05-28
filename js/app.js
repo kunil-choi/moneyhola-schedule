@@ -97,9 +97,14 @@ document.addEventListener('keydown', e=>{
   if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); saveAll(); }
 });
 
-// 초기 실행
+// 초기 실행 — loadingOverlay는 반드시 숨김 처리
 (async ()=>{
-  await fetchCloud();
-  render();
-  document.getElementById('loadingOverlay').classList.add('hide');
+  try{
+    await fetchCloud();
+  }catch(e){
+    console.warn('초기 데이터 로드 실패:', e);
+  }finally{
+    render();
+    document.getElementById('loadingOverlay').classList.add('hide');
+  }
 })();
