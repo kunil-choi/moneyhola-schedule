@@ -3,9 +3,9 @@
 let cloudSched = {};
 let cloudMemos = {};
 
-// 읽기
+// ── 읽기 (GET) ──
 async function fetchCloud(){
-  // 로컬캐시 먼저 (빠른 초기 렌더)
+  // 1. localStorage 캐시 먼저 반영
   try{
     const lc = localStorage.getItem('mh_sched6');
     if(lc) cloudSched = JSON.parse(lc);
@@ -13,7 +13,7 @@ async function fetchCloud(){
     if(lm) cloudMemos = JSON.parse(lm);
   }catch(e){}
 
-  // Google Sheets에서 최신 데이터 가져오기
+  // 2. Google Sheets에서 최신 데이터 가져오기
   try{
     const [rs, rm] = await Promise.all([
       fetch(API + '?action=read&type=sched&t=' + Date.now())
@@ -21,11 +21,11 @@ async function fetchCloud(){
       fetch(API + '?action=read&type=memo&t=' + Date.now())
         .then(r => r.json()).catch(() => null)
     ]);
-    if(rs && typeof rs === 'object' && !Array.isArray(rs)){
+    if(rs && typeof rs === 'object' && !Array.isArray(rs) && Object.keys(rs).length > 0){
       cloudSched = rs;
       localStorage.setItem('mh_sched6', JSON.stringify(rs));
     }
-    if(rm && typeof rm === 'object' && !Array.isArray(rm)){
+    if(rm && typeof rm === 'object' && !Array.isArray(rm) && Object.keys(rm).length > 0){
       cloudMemos = rm;
       localStorage.setItem('mh_memos6', JSON.stringify(rm));
     }
@@ -34,9 +34,9 @@ async function fetchCloud(){
   }
 }
 
-// 쓰기 — GET 방식으로 저장 (CORS 완전 해결)
+// ── 쓰기 (POST → no-cors 우회, localStorage 우선) ──
 async function pushCloud(type, data){
-  // 1. localStorage 즉시 저장
+  // 1. localStorage 즉시 저장 (항상 성공)
   if(type === 'sched'){
     cloudSched = data;
     localStorage.setItem('mh_sched6', JSON.stringify(data));
@@ -45,20 +45,21 @@ async function pushCloud(type, data){
     localStorage.setItem('mh_memos6', JSON.stringify(data));
   }
 
-  // 2. Google Sheets에 GET으로 저장
+  // 2. Google Sheets에 POST로 저장
   try{
-    const encoded = encodeURIComponent(JSON.stringify(data));
-    const url = `${API}?action=write&type=${type}&data=${encoded}&t=${Date.now()}`;
-    const res = await fetch(url).then(r => r.json()).catch(() => null);
-    if(!res || !res.ok){
-      console.warn('Google Sheets 저장 응답 이상:', res);
-    }
+    const body = JSON.stringify({ type, data });
+    await fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',          // CORS 우회 — 응답은 못 읽지만 전송은 됨
+      headers: { 'Content-Type': 'text/plain' }, // simple request 조건 충족
+      body: body
+    });
   }catch(e){
     console.warn('Google Sheets 저장 실패 (로컬에는 저장됨):', e);
   }
 }
 
-// PRESET + 저장 데이터 병합
+// ── PRESET + 저장 데이터 병합 ──
 function getSlots(key){
   if(cloudSched[key]) return JSON.parse(JSON.stringify(cloudSched[key]));
   if(P[key])          return JSON.parse(JSON.stringify(P[key]));
