@@ -78,7 +78,11 @@ function startRealtimeSync(){
     if(val && typeof val === 'object'){
       cloudSched = val;
       localStorage.setItem('mh_sched7', JSON.stringify(val));
-      render();
+      // 현재 입력 중인 필드가 없을 때만 화면 갱신
+      if(!document.activeElement ||
+         !document.activeElement.closest('table')){
+        render();
+      }
     }
   });
   db.ref('memos').on('value', snap => {
@@ -86,7 +90,11 @@ function startRealtimeSync(){
     if(val && typeof val === 'object'){
       cloudMemos = val;
       localStorage.setItem('mh_memos7', JSON.stringify(val));
-      loadMemoUI();
+      // 메모 영역 입력 중이 아닐 때만 갱신
+      if(!document.activeElement ||
+         !document.activeElement.closest('.memo-wrap')){
+        loadMemoUI();
+      }
     }
   });
 }
