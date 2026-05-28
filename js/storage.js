@@ -13,12 +13,12 @@ async function fetchCloud(){
     if(lm) cloudMemos = JSON.parse(lm);
   }catch(e){}
 
-  // 2. Google Sheets에서 최신 데이터 가져오기
+  // 2. Google Sheets 최신 데이터
   try{
     const [rs, rm] = await Promise.all([
-      fetch(API + '?action=read&type=sched&t=' + Date.now())
+      fetch(API + '?type=sched&t=' + Date.now())
         .then(r => r.json()).catch(() => null),
-      fetch(API + '?action=read&type=memo&t=' + Date.now())
+      fetch(API + '?type=memo&t=' + Date.now())
         .then(r => r.json()).catch(() => null)
     ]);
     if(rs && typeof rs === 'object' && !Array.isArray(rs) && Object.keys(rs).length > 0){
@@ -30,13 +30,61 @@ async function fetchCloud(){
       localStorage.setItem('mh_memos6', JSON.stringify(rm));
     }
   }catch(e){
-    console.warn('Google Sheets 읽기 실패, 로컬캐시 사용:', e);
+    console.warn('Sheets 읽기 실패, 로컬캐시 사용:', e);
   }
 }
 
-// ── 쓰기 (POST → no-cors 우회, localStorage 우선) ──
+// ── 쓰기 (form submit 방식 — CORS 완전 우회) ──
+function pushCloudForm(type, data){
+  return new Promise((resolve) => {
+    try{
+      const dataStr = JSON.stringify(data);
+
+      // 숨김 iframe (응답 받는 용도)
+      let iframe = document.getElementById('_cf');
+      if(!iframe){
+        iframe = document.createElement('iframe');
+        iframe.id   = '_cf';
+        iframe.name = '_cf';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      }
+
+      // 숨김 form 생성
+      const form = document.createElement('form');
+      form.method  = 'POST';
+      form.action  = API;
+      form.target  = '_cf';
+      form.enctype = 'application/x-www-form-urlencoded';
+      form.style.display = 'none';
+
+      const addField = (name, value) => {
+        const input = document.createElement('input');
+        input.type  = 'hidden';
+        input.name  = name;
+        input.value = value;
+        form.appendChild(input);
+      };
+      addField('type', type);
+      addField('data', dataStr);
+
+      document.body.appendChild(form);
+      form.submit();
+
+      // form 제거
+      setTimeout(() => {
+        document.body.removeChild(form);
+        resolve();
+      }, 1500);
+    }catch(e){
+      console.warn('form submit 실패:', e);
+      resolve();
+    }
+  });
+}
+
 async function pushCloud(type, data){
-  // 1. localStorage 즉시 저장 (항상 성공)
+  // 1. localStorage 즉시 저장
   if(type === 'sched'){
     cloudSched = data;
     localStorage.setItem('mh_sched6', JSON.stringify(data));
@@ -45,18 +93,8 @@ async function pushCloud(type, data){
     localStorage.setItem('mh_memos6', JSON.stringify(data));
   }
 
-  // 2. Google Sheets에 POST로 저장
-  try{
-    const body = JSON.stringify({ type, data });
-    await fetch(API, {
-      method: 'POST',
-      mode: 'no-cors',          // CORS 우회 — 응답은 못 읽지만 전송은 됨
-      headers: { 'Content-Type': 'text/plain' }, // simple request 조건 충족
-      body: body
-    });
-  }catch(e){
-    console.warn('Google Sheets 저장 실패 (로컬에는 저장됨):', e);
-  }
+  // 2. Google Sheets에 form submit으로 저장
+  await pushCloudForm(type, data);
 }
 
 // ── PRESET + 저장 데이터 병합 ──
