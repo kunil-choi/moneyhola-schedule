@@ -106,5 +106,6 @@ document.addEventListener('keydown', e=>{
   }finally{
     render();
     document.getElementById('loadingOverlay').classList.add('hide');
+    startRealtimeSync(); // 실시간 동기화 시작
   }
 })();
