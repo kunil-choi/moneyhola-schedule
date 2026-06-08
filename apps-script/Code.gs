@@ -51,7 +51,7 @@ function syncDateToCalendar(dateKey, slots) {
     }
 
     const startTime = new Date(year, month, day, startHour, startMin, 0);
-    const endTime   = new Date(year, month, day, startHour + 2, startMin, 0);
+    const endTime   = new Date(year, month, day, startHour + 1, startMin, 0);
 
     const slotLabel = idx > 0 ? ' [2차]' : '';
     const prodText  = slot.prod  ? ` / 제작: ${slot.prod}`  : '';
