@@ -5,9 +5,9 @@ const FIREBASE_URL = 'https://moneyhola-schedule-default-rtdb.asia-southeast1.fi
 
 // ── 유틸: 캘린더 색상 ──
 function getColor(prod) {
-  if (prod === '최건일') return CalendarApp.EventColor.YELLOW;
-  if (prod === '양영은') return CalendarApp.EventColor.RED;
-  return CalendarApp.EventColor.CYAN;
+  if (prod === '최건일') return '5';  // 바나나(노란색)
+  if (prod === '양영은') return '11'; // 토마토(빨간색)
+  return '7'; // 공작새(하늘색)
 }
 
 // ── 특정 날짜 동기화 (저장 버튼 연동) ──
