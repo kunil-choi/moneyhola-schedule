@@ -3,6 +3,15 @@
 const CALENDAR_ID  = 'gaegoo99@gmail.com';
 const FIREBASE_URL = 'https://moneyhola-schedule-default-rtdb.asia-southeast1.firebasedatabase.app';
 
+// DB 보안 규칙이 auth != null 을 요구하므로, 서버(Apps Script)에서 REST로 읽을 때도
+// 인증 토큰이 필요합니다. Firebase 콘솔 > 프로젝트 설정 > 서비스 계정 > 데이터베이스 보안
+// 비밀(레거시)에서 발급받아 스크립트 속성(FIREBASE_DB_SECRET)에 저장하세요.
+// 파일 > 프로젝트 속성 > 스크립트 속성에서 설정합니다.
+function authQuery_() {
+  const secret = PropertiesService.getScriptProperties().getProperty('FIREBASE_DB_SECRET');
+  return secret ? ('?auth=' + encodeURIComponent(secret)) : '';
+}
+
 // ── 유틸: 캘린더 색상 ──
 function getColor(prod) {
   if (prod === '최건일') return '5';  // 바나나(노란색)
@@ -70,7 +79,7 @@ function syncDateToCalendar(dateKey, slots) {
 
 // ── 전체 동기화 (수동 실행용) ──
 function syncToCalendar() {
-  const res  = UrlFetchApp.fetch(FIREBASE_URL + '/schedule.json');
+  const res  = UrlFetchApp.fetch(FIREBASE_URL + '/schedule.json' + authQuery_());
   const data = JSON.parse(res.getContentText());
   if (!data) { Logger.log('Firebase 데이터 없음'); return; }
 
@@ -87,7 +96,7 @@ function doGet(e) {
 
   if (action === 'sync' && dateKey) {
     try {
-      const res   = UrlFetchApp.fetch(FIREBASE_URL + '/schedule/' + dateKey + '.json');
+      const res   = UrlFetchApp.fetch(FIREBASE_URL + '/schedule/' + dateKey + '.json' + authQuery_());
       const slots = JSON.parse(res.getContentText());
       syncDateToCalendar(dateKey, slots);
       return ContentService
