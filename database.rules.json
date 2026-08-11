@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "schedule": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "memos": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "$other": {
+      ".read": false,
+      ".write": false
+    }
+  }
+}

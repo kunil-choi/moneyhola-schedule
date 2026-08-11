@@ -18,6 +18,23 @@ const db = firebase.database();
 let cloudSched = {};
 let cloudMemos = {};
 
+// ── 익명 인증 (로그인 화면 없이 DB 규칙의 auth != null 통과) ──
+let authReady = null;
+function ensureAuth(){
+  if(!authReady){
+    authReady = new Promise(resolve => {
+      firebase.auth().onAuthStateChanged(user => {
+        if(user) resolve(user);
+      });
+      firebase.auth().signInAnonymously().catch(e => {
+        console.warn('Firebase 익명 로그인 실패:', e);
+        resolve(null);
+      });
+    });
+  }
+  return authReady;
+}
+
 // ── 읽기 ──
 async function fetchCloud(){
   // 1. localStorage 캐시 먼저 반영 (빠른 초기 렌더)
@@ -30,6 +47,7 @@ async function fetchCloud(){
 
   // 2. Firebase에서 최신 데이터 가져오기
   try{
+    await ensureAuth();
     const [snapS, snapM] = await Promise.all([
       db.ref('schedule').once('value'),
       db.ref('memos').once('value')
@@ -63,6 +81,7 @@ async function pushCloud(type, data){
 
   // 2. Firebase에 저장
   try{
+    await ensureAuth();
     const ref = (type === 'sched') ? db.ref('schedule') : db.ref('memos');
     await ref.set(data);
   }catch(e){
@@ -72,7 +91,8 @@ async function pushCloud(type, data){
 }
 
 // ── 실시간 동기화 (다른 팀원이 저장하면 자동 반영) ──
-function startRealtimeSync(){
+async function startRealtimeSync(){
+  await ensureAuth();
   db.ref('schedule').on('value', snap => {
     const val = snap.val();
     if(val && typeof val === 'object'){
